@@ -7,7 +7,7 @@
 #'
 #'
 #' @title Extract Relevant lm Components
-#' @param lm
+#' @param lm linear model
 #' @param alpha user-defined alpha; define the threshold for significance
 #' @param output controls whether the extracted components are published, default is that the output is not published, but can be set to 'TRUE' to publish results
 #' @return list of relevant lm components, if output= TRUE is supplied by user, otherwise, output is not published
