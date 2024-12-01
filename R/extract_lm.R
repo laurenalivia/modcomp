@@ -5,8 +5,9 @@
 #' @title Extract Relevant lm Components
 #' @param lm
 #' @param alpha user-defined alpha; define the threshold for significance
-#' @return list of relevant lm components
-extract_lm<- function(lm, alpha=0.05) {
+#' @param output controls whether the extracted components are published, default is that the output is not published, but can be set to 'TRUE' to publish results
+#' @return list of relevant lm components, if output= TRUE is supplied by user, otherwise, output is not published
+extract_lm<- function(lm, alpha=0.05, output= FALSE) {
 
   #VERIFY input is not missing a linear model, the linear model was fit using 'lm', alpha is numeric
   #and is a value between 0 and 1, with customized Error msg via tryCatch
@@ -41,9 +42,14 @@ extract_lm<- function(lm, alpha=0.05) {
       lower_confints<- confints[,1]
       higher_confints<-confints[,2]
 
-      #RETURN-- will want to change from a list later on, potentially?? just keeping it like this for now
-      list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars, lower_confints=lower_confints,
-           higher_confints=higher_confints, confints=confints)
+      #RETURN (will only conditionally display output based on if 'output=TRUE' is specified)
+      display_output <-list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars,
+                            lower_confints=lower_confints, higher_confints=higher_confints)
+      if (output) {
+        return(display_output)
+      } else {
+        invisible(NULL) #means no output published
+      }
     },
 
     #Error statement to be displayed if initial verification finds a snag in the input
