@@ -65,7 +65,7 @@ extract_lm<- function(lm, alpha=0.05, output= FALSE) {
       #Return List of components Conditionally
       display_output <-list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars,
                             lower_confints=lower_confints, higher_confints=higher_confints, rsq=rsq, adj.rsq=adj.rsq,
-                            aic= aic_lm)
+                            aic= aic_lm, alpha=alpha)
 
       #this code chunk below is what makes the ouptut publishing conditional
       if (output) {
