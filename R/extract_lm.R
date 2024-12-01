@@ -36,9 +36,14 @@ extract_lm<- function(lm, alpha=0.05) {
                      ifelse(coef_pval <= .2*alpha, "**",
                             ifelse(coef_pval <=alpha, "*",
                                    ifelse(coef_pval <= 2*alpha, ".", ""))))
+      #confidence intervals, based on alpha value
+      confints<- confint(lm, level= (1-alpha))
+      lower_confints<- confints[,1]
+      higher_confints<-confints[,2]
 
       #RETURN-- will want to change from a list later on, potentially?? just keeping it like this for now
-      list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars)
+      list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars, lower_confints=lower_confints,
+           higher_confints=higher_confints, confints=confints)
     },
 
     #Error statement to be displayed if initial verification finds a snag in the input
