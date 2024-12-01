@@ -6,7 +6,7 @@
 #' @param lm
 #' @param alpha user-defined alpha; define the threshold for significance
 #' @return list of relevant lm components
-extract_lm<- function(lm, alpha) {
+extract_lm<- function(lm, alpha=0.05) {
 
   #VERIFY input is not missing a linear model or alpha value, the linear model was fit using 'lm', alpha is numeric
   #and in format n.nn with customized Error msg via tryCatch
