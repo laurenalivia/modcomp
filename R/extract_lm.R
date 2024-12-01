@@ -12,8 +12,10 @@
 #' @param output controls whether the extracted components are published, default is that the output is not published, but can be set to 'TRUE' to publish results
 #' @return list of relevant lm components, if output= TRUE is supplied by user, otherwise, output is not published
 #' @examples
-#' # lmod<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
-#' # extract_lm(lmod, output=TRUE)
+#' #fit linear model
+#'  lmod<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
+#' #extract relevant model components
+#'  extract_lm(lmod, output=TRUE)
 #'
 #' @export
 extract_lm<- function(lm, alpha=0.05, output= FALSE) {
