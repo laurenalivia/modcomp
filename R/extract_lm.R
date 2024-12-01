@@ -1,5 +1,7 @@
 
-#' function to extract relevant components from a linear model
+#' function to extract relevant components from a linear model (decided it needed a more detailed function
+#' because I want the user to be able to define the alpha value, so some resulting values in the general summary(lm)
+#' would need to be made dependent on that change from 0.05)
 #'
 #' The output will be used downstream to supply model information in a display for comparison against other linear models
 #' @title Extract Relevant lm Components
@@ -42,9 +44,18 @@ extract_lm<- function(lm, alpha=0.05, output= FALSE) {
       lower_confints<- confints[,1]
       higher_confints<-confints[,2]
 
+      #AIC
+      aic_lm<- extractAIC(lm)
+
+      #R-squared
+      rsq<- lm_summary$r.squared
+
+      #Adjusted R-squared
+      adj.rsq<- lm_summary$adj.r.squared
+
       #RETURN (will only conditionally display output based on if 'output=TRUE' is specified)
       display_output <-list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars,
-                            lower_confints=lower_confints, higher_confints=higher_confints)
+                            lower_confints=lower_confints, higher_confints=higher_confints, rsq=rsq, adj.rsq=adj.rsq)
       if (output) {
         return(display_output)
       } else {
