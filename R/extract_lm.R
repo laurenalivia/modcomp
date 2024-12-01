@@ -71,7 +71,7 @@ extract_lm<- function(lm, alpha=0.05, output= FALSE) {
       if (output) {
         return(display_output)
       } else {
-        invisible(NULL) #means no output published
+        invisible(display_output) #means no output published
       }
     },
 
