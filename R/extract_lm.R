@@ -55,7 +55,8 @@ extract_lm<- function(lm, alpha=0.05, output= FALSE) {
 
       #RETURN (will only conditionally display output based on if 'output=TRUE' is specified)
       display_output <-list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars,
-                            lower_confints=lower_confints, higher_confints=higher_confints, rsq=rsq, adj.rsq=adj.rsq)
+                            lower_confints=lower_confints, higher_confints=higher_confints, rsq=rsq, adj.rsq=adj.rsq,
+                            aic= aic_lm)
       if (output) {
         return(display_output)
       } else {
