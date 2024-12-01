@@ -9,7 +9,7 @@
 extract_lm<- function(lm, alpha=0.05) {
 
   #VERIFY input is not missing a linear model, the linear model was fit using 'lm', alpha is numeric
-  #and in format n.nn with customized Error msg via tryCatch
+  #and is a value between 0 and 1, with customized Error msg via tryCatch
   tryCatch(
     expr = {
       stopifnot(!missing(lm), inherits(lm, "lm"), is.numeric(alpha), alpha <1, alpha>0)
