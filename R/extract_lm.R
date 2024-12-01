@@ -1,9 +1,11 @@
 
-#' function to extract relevant components from a linear model (decided it needed a more detailed function
-#' because I want the user to be able to define the alpha value, so some resulting values in the general summary(lm)
-#' would need to be made dependent on that change from 0.05)
+#' extract relevant components from a linear model
 #'
-#' The output will be used downstream to supply model information in a display for comparison against other linear models
+#' I want the user to be able to define the alpha value, so some resulting values in the general
+#' summary(lm) would need to be made dependent on that change from 0.05).  The output will be used
+#' downstream to supply model information in a display/table for comparison against other similar/nested models.
+#'
+#'
 #' @title Extract Relevant lm Components
 #' @param lm
 #' @param alpha user-defined alpha; define the threshold for significance
