@@ -11,6 +11,11 @@
 #' @param alpha user-defined alpha; define the threshold for significance
 #' @param output controls whether the extracted components are published, default is that the output is not published, but can be set to 'TRUE' to publish results
 #' @return list of relevant lm components, if output= TRUE is supplied by user, otherwise, output is not published
+#' @examples
+#' # lmod<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
+#' # extract_lm(lmod, output=TRUE)
+#'
+#' @export
 extract_lm<- function(lm, alpha=0.05, output= FALSE) {
 
   #VERIFY input is not missing a linear model, the linear model was fit using 'lm', alpha is numeric
@@ -55,10 +60,12 @@ extract_lm<- function(lm, alpha=0.05, output= FALSE) {
       #Adjusted R-squared
       adj.rsq<- lm_summary$adj.r.squared
 
-      #RETURN (will only conditionally display output based on if 'output=TRUE' is specified)
+      #Return List of components Conditionally
       display_output <-list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars,
                             lower_confints=lower_confints, higher_confints=higher_confints, rsq=rsq, adj.rsq=adj.rsq,
                             aic= aic_lm)
+
+      #this code chunk below is what makes the ouptut publishing conditional
       if (output) {
         return(display_output)
       } else {
