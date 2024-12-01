@@ -14,6 +14,7 @@
 #' @examples
 #' #fit linear model
 #'  lmod<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
+#' #extract components, supplying 'output=TRUE' to print output
 #'  extract_lm(lmod, output=TRUE)
 #'
 #' @export

@@ -24,3 +24,9 @@ I want the user to be able to define the alpha value, so some resulting values i
 summary(lm) would need to be made dependent on that change from 0.05).  The output will be used
 downstream to supply model information in a display/table for comparison against other similar/nested models.
 }
+\examples{
+#fit linear model
+ lmod<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
+ extract_lm(lmod, output=TRUE)
+
+}

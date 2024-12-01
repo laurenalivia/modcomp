@@ -14,3 +14,4 @@ lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb
 
 extract_lm(lmod1, output=TRUE)
 summary(lmod1)
+
