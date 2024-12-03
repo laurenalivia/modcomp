@@ -1,13 +1,18 @@
 
-#' function to generate a stack of model output tables for quick comparison.
+#' Generate a stack of model output tables for quick comparison.
 #'
 #'
-#' @title stack model information tables for comparison
-#' @param model_extract model(s) to display components for. can be just one, or as many as desired for a comparison of values
+#' @title stack model information tables on top of each other to make a quick comparison between values.
+#' @param model(s) model(s) to display components for. can be just one, or as many as desired for a comparison of values
 #' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
-#' @param alpha_ user-defined alpha; define the threshold for significance
-#' @return table(s) of relevant model components for a quick side-by-side comparison
-#'
+#' @param alpha_ user-defined alpha; define the threshold for significance. Default is 0.05.
+#' @return table(s) of relevant model components for a quick comparison.
+#' @examples
+#' #fit linear models
+#' lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = teengamb)
+#' lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
+#' #use 'tablestack()' to compare outputs displayed; can choose a user-defined alpha if default 0.05 is not the desired level.
+#'  tablestack(lmod1, lmod2, alpha_= 0.1)
 #'
 
 tablestack<- function (..., alpha_= 0.05, modeltype= c("lm", "coxph")) {

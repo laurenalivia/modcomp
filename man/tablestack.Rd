@@ -9,7 +9,7 @@ tablestack(..., alpha_ = 0.05, modeltype = c("lm", "coxph"))
 tablestack(..., alpha_ = 0.05, modeltype = c("lm", "coxph"))
 }
 \arguments{
-\item{alpha_}{user-defined alpha; define the threshold for significance}
+\item{alpha_}{user-defined alpha; define the threshold for significance. Default is 0.05.}
 
 \item{modeltype}{'lm' for linear model, 'coxph' for cox proportional hazards model.}
 
@@ -18,10 +18,18 @@ tablestack(..., alpha_ = 0.05, modeltype = c("lm", "coxph"))
 \value{
 table of relevant model components for a quick side-by-side comparison
 
-table(s) of relevant model components for a quick side-by-side comparison
+table(s) of relevant model components for a quick comparison.
 }
 \description{
 function to generate a table for easy comparison against similar or nested models.
 
-function to generate a stack of model output tables for quick comparison.
+Generate a stack of model output tables for quick comparison.
+}
+\examples{
+#fit linear models
+lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = teengamb)
+lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
+#use 'tablestack()' to compare outputs displayed; can choose a user-defined alpha if default 0.05 is not the desired level.
+ tablestack(lmod1, lmod2, alpha_= 0.1)
+
 }

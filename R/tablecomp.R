@@ -7,12 +7,12 @@
 #' @title Generate Model Comparison Table
 #' @param model_extract model(s) to display components for. can be just one, or as many as desired for side-by-side comparison of values
 #' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
-#' @param alpha_ user-defined alpha; define the threshold for significance
-#' @return table of relevant model components for a quick side-by-side comparison
+#' @param alpha_ user-defined alpha; define the threshold for significance. Default is 0.05.
+#' @return table of relevant model components for a quick side-by-side comparison between models
 #'
 #'
 
-tablestack<- function (..., alpha_= 0.05, modeltype= c("lm", "coxph")) {
+tablecomp<- function (..., alpha_= 0.05, modeltype= c("lm", "coxph")) {
 
   #Validate that modeltype specified is either 'lm' or 'coxph' using 'match.arg()' function
   modeltype<- match.arg(modeltype)
@@ -31,8 +31,14 @@ tablestack<- function (..., alpha_= 0.05, modeltype= c("lm", "coxph")) {
   #apply the extract_ function for each model in the grouped list, pass alpha_ from tablestack to alpha from extract_lm, this works finally!
   extracts<- lapply(inputmods, extract_lm, alpha= alpha_)
 
-  #output is the model summaries stacked right on top of each other, so the user doesnt have to scroll as much, and has everything displayed at once
-  return(kable(extracts))
+  #want to parse out the unique rownames among the model extracts, as these are the parameters we want to compare across models and will make up the right-most column of table output
+  all_unique_predictors<- unique(unlist(lapply(extracts, rownames)))
+
+  #start table build with rownames as the right-most column. data will be added model by model...thinking that will be the easiest way to generate it?
+  outputtable<- data.frame(row.names = all_unique_predictors)
+  return(outputtable) #returns 'data frame with 0 columns and 8 rows' in console, think it works to this point
+
+
 
 }
 
