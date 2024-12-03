@@ -10,7 +10,7 @@
 #'
 #'
 
-tablestack<- function (..., set_alpha= 0.05, modeltype= c("lm", "coxph")) {
+tablestack<- function (..., alpha= 0.05, modeltype= c("lm", "coxph")) {
 
   #Validate that modeltype specified is either 'lm' or 'coxph' using 'match.arg()' function
   modeltype<- match.arg(modeltype)
@@ -26,8 +26,8 @@ tablestack<- function (..., set_alpha= 0.05, modeltype= c("lm", "coxph")) {
   #if they are all the same, this will be printed to the output, "\n" forces new line after this message for remaining output
   cat("All models are of type specified:", modeltype, "\n")
 
-  #apply the extract_ function for each model in the grouped list
-  extracts<- lapply(inputmods, extract_lm(alpha= set_alpha))
+  #apply the extract_ function for each model in the grouped list, pass alpha from tablestack to alpha from extract_lm, somehow this works finally!
+  extracts<- lapply(inputmods, extract_lm, alpha= alpha)
 
   #output is the model summaries stacked right on top of each other, so the user doesnt have to scroll as much, and has everything displayed at once
   return(kable(extracts))
