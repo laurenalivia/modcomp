@@ -31,6 +31,10 @@ extract_lm<- function(lm, alpha=0.05, output= TRUE) {
       lm_summary<- summary(lm)
 
       #Extract Model Values of Interest
+
+      #Model Name
+      modelname<- as.character(substitute(lm))
+
       #Beta Coefs
       coefs_tbl<- lm_summary$coefficients
       coefs<- coefs_tbl[,'Estimate']
@@ -67,7 +71,7 @@ extract_lm<- function(lm, alpha=0.05, output= TRUE) {
       #Return List of components Conditionally
       display_output <-list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars,
                             lower_confints=lower_confints, higher_confints=higher_confints, rsq=rsq, adj.rsq=adj.rsq,
-                            aic= aic_lm, alpha=alpha)
+                            aic= aic_lm, alpha=alpha, modelname=modelname)
 
        #Return dataframe of the components, List isn't working well is downstram 'comptable' function
       display_output<- as.data.frame(display_output)
