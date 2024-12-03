@@ -3,9 +3,9 @@
 #'
 #'
 #' @title stack model information tables for comparison
-#' @param model_extract model(s) to display components for. can be just one, or as many as desired for side-by-side comparison of values
+#' @param model_extract model(s) to display components for. can be just one, or as many as desired for a comparison of values
 #' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
-#' @return table of relevant model components for a quick side-by-side comparison
+#' @return table(s) of relevant model components for a quick side-by-side comparison
 #'
 #'
 
