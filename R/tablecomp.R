@@ -8,6 +8,15 @@
 #' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
 #' @param alpha_ user-defined alpha; define the threshold for significance. Default is 0.05.
 #' @return table of relevant model components for a quick side-by-side comparison between models
+#'@examples
+#' #supply linear model(s) for output comparison
+#'  lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = teengamb)
+#'  lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
+#'  lmod3<- lm(gamble ~ sex + status + income + verbal, data = teengamb)
+#' #determine what comparison_value(s) are important for the table, or user can do one comparison value per table to make viewing even easier. Then create comptable using 'comptable()'.
+#' tablecomp(lmod1)
+#' tablecomp(lmod1, lmod2, comparison_value= "coefs")
+#' tablecomp(lmod1, lmod2, lmod3, comparison_value= c("coefs", "p_vals", "stars"))
 #'
 #'
 
@@ -26,6 +35,8 @@ tablecomp<- function (..., alpha_= 0.05, modeltype= c("lm", "coxph"), comparison
   }
   #if they are all the same, this will be printed to the output, "\n" forces new line after this message for remaining output
   cat("All models are of type specified:", modeltype, "\n")
+  cat("Model Output Displays in the Order Specified in the Input of 'tablecomp(), when choosing to compare more than one model.", "\n")
+  cat("Make sure the largest model is displayed first for nested model comparison, to ensure all predictor names are displayed", "\n", "\n")
 
   #apply the extract_ function for each model in the grouped list, pass alpha_ from tablestack to alpha from extract_lm, this works finally!
   extracts<- lapply(inputmods, extract_lm, alpha= alpha_)
@@ -46,10 +57,11 @@ tablecomp<- function (..., alpha_= 0.05, modeltype= c("lm", "coxph"), comparison
   }))
 
   #colnames
-  colnames(outputtable_columns)<-names(extracts)
+  colnames(outputtable_columns)<- rep(comparison_value, length(extracts))
+
   #return table
 
-  return(outputtable_columns)
+  return(kable(outputtable_columns))
 
 
 }

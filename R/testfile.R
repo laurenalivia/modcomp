@@ -12,7 +12,6 @@ library("devtools")
 
 lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = teengamb)
 lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
-
-comptable(lmod1, lmod2, modeltype = "lm")
+lmod3<- lm(gamble ~ sex + status + income + verbal, data = teengamb)
 
 
