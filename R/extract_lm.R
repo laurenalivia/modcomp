@@ -24,7 +24,7 @@ extract_lm<- function(lm, alpha=0.05, output= FALSE) {
   #and is a value between 0 and 1, with customized Error msg via tryCatch
   tryCatch(
     expr = {
-      stopifnot(!missing(lm), inherits(lm, "lm"), is.numeric(alpha), alpha <1, alpha>0)
+      stopifnot(!missing(lm), inherits(lm, what= "lm"), is.numeric(alpha), alpha <1, alpha>0)
 
       #Extract Model Summary
       lm_summary<- summary(lm)
@@ -55,6 +55,7 @@ extract_lm<- function(lm, alpha=0.05, output= FALSE) {
 
       #AIC
       aic_lm<- extractAIC(lm)
+      aic_lm<- aic_lm[2:2] #the extracted aic includes 2 values, #parameters and AIC value. This extracts JUST the AIC! Otherwise causes issues in the output with it sometimes displaying AIC, and others the #parameters in the df
 
       #R-squared
       rsq<- lm_summary$r.squared
@@ -66,6 +67,9 @@ extract_lm<- function(lm, alpha=0.05, output= FALSE) {
       display_output <-list(coefs= coefs, stderrs=coef_stderr, t_vals=coef_tval, p_vals=coef_pval, stars=stars,
                             lower_confints=lower_confints, higher_confints=higher_confints, rsq=rsq, adj.rsq=adj.rsq,
                             aic= aic_lm, alpha=alpha)
+
+       #Return dataframe of the components, List isn't working well is downstram 'comptable' function
+      display_output<- as.data.frame(display_output)
 
       #this code chunk below is what makes the ouptut publishing conditional
       if (output) {
