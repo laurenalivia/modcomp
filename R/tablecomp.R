@@ -1,7 +1,6 @@
-#want to put the extracted model components in a table for side-by-side comparison with each model it's own column, predictors on the right, and something where you
-  #user chooses the values placed in each cell, like: [coef estimate] concatenated with the pvalue and stars? With the option to instead have the output value be confintervals, etc?
-  #return(extract)
-#' function to generate a table for easy comparison against similar or nested models.
+
+
+#' Generate a single table for easy comparison between desired models, where each model occupies its own column.
 #'
 #'
 #' @title Generate Model Comparison Table
@@ -12,7 +11,7 @@
 #'
 #'
 
-tablecomp<- function (..., alpha_= 0.05, modeltype= c("lm", "coxph")) {
+tablecomp<- function (..., alpha_= 0.05, modeltype= c("lm", "coxph"), comparison_value= c("coefs", "stderrs", "t_vals", "p_vals", "stars", "lower_confints", "higher_confints", "rsq", "adj.rsq", "aic", "alpha")) {
 
   #Validate that modeltype specified is either 'lm' or 'coxph' using 'match.arg()' function
   modeltype<- match.arg(modeltype)
@@ -34,10 +33,23 @@ tablecomp<- function (..., alpha_= 0.05, modeltype= c("lm", "coxph")) {
   #want to parse out the unique rownames among the model extracts, as these are the parameters we want to compare across models and will make up the right-most column of table output
   all_unique_predictors<- unique(unlist(lapply(extracts, rownames)))
 
-  #start table build with rownames as the right-most column. data will be added model by model...thinking that will be the easiest way to generate it?
-  outputtable<- data.frame(row.names = all_unique_predictors)
-  return(outputtable) #returns 'data frame with 0 columns and 8 rows' in console, think it works to this point
+  #start table/df build with rownames as the right-most column. data will be added model by model...thinking that will be the easiest way to generate it?
+  outputtable<- data.frame(row.names = all_unique_predictors) #returns 'data frame with 0 columns and 8 rows' in console, it works to this point
 
+  #now want to pull information from each model, retrieved by a match between rowname of the model extract and rowname of table being built
+  #thinking I could make a function that iterates over the extracts supplied, and adds a column for each
+
+  #iterate over the supplied models, if multiple, and populate a column for each with default data being [coef (pval) (stars)] all concatenated so its one value
+
+  outputtable_columns<-do.call(cbind, lapply(extracts, function(df) {
+    df[all_unique_predictors, comparison_value, drop= FALSE]
+  }))
+
+  #colnames
+  colnames(outputtable_columns)<-names(extracts)
+  #return table
+
+  return(outputtable_columns)
 
 
 }
