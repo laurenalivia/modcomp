@@ -1,16 +1,15 @@
 
-#' function to generate a table for easy comparison against similar or nested models.
+#' function to generate a stack of model output tables for quick comparison.
 #'
 #'
-#' @title Generate Model Comparison Table
+#' @title stack model information tables for comparison
 #' @param model_extract model(s) to display components for. can be just one, or as many as desired for side-by-side comparison of values
-#' @param alpha user-defined alpha; define the threshold for significance (brought over from previous models? is ther)
 #' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
 #' @return table of relevant model components for a quick side-by-side comparison
 #'
 #'
 
-tablestack<- function (..., alpha= 0.05, modeltype= c("lm", "coxph")) {
+tablestack<- function (..., modeltype= c("lm", "coxph")) {
 
   #Validate that modeltype specified is either 'lm' or 'coxph' using 'match.arg()' function
   modeltype<- match.arg(modeltype)
