@@ -11,7 +11,7 @@ extract_lm(lm, alpha = 0.05, output = TRUE)
 
 \item{alpha}{user-defined alpha; define the threshold for significance}
 
-\item{output}{controls whether the extracted components are published, default is that the output is not published, but can be set to 'TRUE' to publish results}
+\item{output}{controls whether the extracted components are published, default is that the output is published, but can be set to 'FALSE' to stop from publishing output in console.}
 }
 \value{
 list of relevant lm components, if output= TRUE is supplied by user, otherwise, output is not published
