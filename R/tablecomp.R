@@ -1,12 +1,17 @@
 
 
-#' Generate a single table for easy comparison between desired models, where each model occupies its own column.
+#' Generate a single table for easy comparison between desired models, where each model occupies its own column/ set of columns.
 #'
+#'User can define which model components are of interest for a quick comparison, for example, model coefficient estimats ('coefs') and associated p values ('p_vals'). All components extracted
+#'using 'extract_lm()' are available for comparison in this method. One quirk here is that models are displayed left to right in the order they are supplied in the funtion. A later version would fix the
+#'lack of model labels, but for now this is the method to identify the models being compared--by order. It is also advised to supply the largest model first (especially if comparing nested models), as it will
+#'ensure all predictor names will be displayed successfully. A later version would fix this quirk as well.
 #'
 #' @title Generate Model Comparison Table
 #' @param model_extract model(s) to display components for. can be just one, or as many as desired for side-by-side comparison of values
 #' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
 #' @param alpha_ user-defined alpha; define the threshold for significance. Default is 0.05.
+#' @param comparison_value model components to be compared in the output table. Can specify one, multiple, or all.
 #' @return table of relevant model components for a quick side-by-side comparison between models
 #'@examples
 #' #supply linear model(s) for output comparison

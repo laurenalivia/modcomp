@@ -1,6 +1,8 @@
 
 #' Generate a stack of model output tables for quick comparison.
 #'
+#'function to generate the output of multiple models (of the same class) stacked on top of each other to make comparison of values easier. Or, only one model can be specified and the output
+#'will still list the details for the singular model in an efficient way. This makes one large improvement over 'summary(lm)', as the user can define an alpha value beyond just a set 0.05.
 #'
 #' @title stack model information tables on top of each other to allow for a quick comparison between values.
 #' @param model(s) model(s) to display components for. can be just one, or as many as desired for a comparison of values
