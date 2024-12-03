@@ -18,7 +18,7 @@
 #'  extract_lm(lmod, output=TRUE)
 #'
 #' @export
-extract_lm<- function(lm, alpha=0.05, output= FALSE) {
+extract_lm<- function(lm, alpha=0.05, output= TRUE) {
 
   #VERIFY input is not missing a linear model, the linear model was fit using 'lm', alpha is numeric
   #and is a value between 0 and 1, with customized Error msg via tryCatch
