@@ -29,9 +29,7 @@ comptable<- function (..., alpha= 0.05, modeltype= c("lm", "coxph")) {
   #apply the extract_ function for each model in the grouped list
   extracts<- lapply(inputmods, extract_lm)
 
-  #return(extracts), proves this function is working correctly.
-
-  #want to put the extracted model components in a table for side-by-side comparison
-  return(extracts)
+  #output is the model summaries stacked right on top of each other, so the user doesnt have to scroll as much, and has everything displayed at once
+  return(kable(extracts))
 
 }
