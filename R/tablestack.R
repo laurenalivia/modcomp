@@ -2,7 +2,7 @@
 #' Generate a stack of model output tables for quick comparison.
 #'
 #'
-#' @title stack model information tables on top of each other to make a quick comparison between values.
+#' @title stack model information tables on top of each other to allow for a quick comparison between values.
 #' @param model(s) model(s) to display components for. can be just one, or as many as desired for a comparison of values
 #' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
 #' @param alpha_ user-defined alpha; define the threshold for significance. Default is 0.05.
