@@ -2,7 +2,7 @@
 % Please edit documentation in R/tablestack.R
 \name{tablestack}
 \alias{tablestack}
-\title{stack model information tables on top of each other to allow for a quick comparison between values.}
+\title{Generate a stack of model output tables for quick comparison.}
 \usage{
 tablestack(..., alpha_ = 0.05, modeltype = c("lm", "coxph"))
 }
@@ -17,7 +17,7 @@ tablestack(..., alpha_ = 0.05, modeltype = c("lm", "coxph"))
 table(s) of relevant model components for a quick comparison. They are displayed in the order they are entered as input, with the top being the first model specified, and so on.
 }
 \description{
-Generate a stack of model output tables for quick comparison.
+stack model information tables on top of each other to allow for a quick comparison between values.
 }
 \details{
 function to generate the output of multiple models (of the same class) stacked on top of each other to make comparison of values easier. Or, only one model can be specified and the output
