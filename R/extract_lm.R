@@ -8,14 +8,14 @@
 #'
 #' @title Extract Relevant lm Components
 #' @param lm linear model
-#' @param alpha user-defined alpha; define the threshold for significance
-#' @param output controls whether the extracted components are published, default is that the output is published, but can be set to 'FALSE' to stop from publishing output in console.
-#' @return list of relevant lm components, if output= TRUE is supplied by user, otherwise, output is not published
+#' @param alpha user-defined alpha; define the threshold for significance. Default is 0.05.
+#' @param output controls whether the extracted components are published in the console, default is 'TRUE'.
+#' @return dataframe of relevant lm components
 #' @examples
 #' #fit linear model
 #'  lmod<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
 #' #extract components, supplying 'output=TRUE' to print output
-#'  extract_lm(lmod, output=TRUE)
+#'  extract_lm(lmod)
 #'
 #' @export
 extract_lm<- function(lm, alpha=0.05, output= TRUE) {

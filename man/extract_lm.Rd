@@ -9,12 +9,12 @@ extract_lm(lm, alpha = 0.05, output = TRUE)
 \arguments{
 \item{lm}{linear model}
 
-\item{alpha}{user-defined alpha; define the threshold for significance}
+\item{alpha}{user-defined alpha; define the threshold for significance. Default is 0.05.}
 
-\item{output}{controls whether the extracted components are published, default is that the output is published, but can be set to 'FALSE' to stop from publishing output in console.}
+\item{output}{controls whether the extracted components are published in the console, default is 'TRUE'.}
 }
 \value{
-list of relevant lm components, if output= TRUE is supplied by user, otherwise, output is not published
+dataframe of relevant lm components
 }
 \description{
 extract relevant components from a linear model
@@ -28,6 +28,6 @@ downstream to supply model information in a display/table for comparison against
 #fit linear model
  lmod<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
 #extract components, supplying 'output=TRUE' to print output
- extract_lm(lmod, output=TRUE)
+ extract_lm(lmod)
 
 }
