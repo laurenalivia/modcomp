@@ -12,24 +12,26 @@
 
 comptable<- function (..., alpha= 0.05, modeltype= c("lm", "coxph")) {
 
-  #Validate that modeltype specified is either 'lm' or 'coxph'
+  #Validate that modeltype specified is either 'lm' or 'coxph' using 'match.arg()' function
   modeltype<- match.arg(modeltype)
 
-  #group the multiple model inputs from '...'
+  #group the multiple model inputs from '...' so they can be iterated over for functions later
   inputmods<- list(...)
 
-  #figured out the 'if-stop' usage for a piece, rather than a tryCatch or stopifnot, trying here:
-  #make sure they are all the same type, and that type matches what was specified for 'modeltype'
+  #figured out the 'if-stop' usage for a piece, rather than a tryCatch or stopifnot:
+  #make sure they are all the same type, and that type matches what was specified for 'modeltype' in the input
   if(!all(sapply(inputmods, inherits, what= modeltype))) {
     stop("All models supplied must be of type specified:", modeltype)
   }
-  #if they are all the same, this will be printed to the output, "\n" forces new line after this message for remaining ouput
+  #if they are all the same, this will be printed to the output, "\n" forces new line after this message for remaining output
   cat("All models are of type specified:", modeltype, "\n")
 
   #apply the extract_ function for each model in the grouped list
   extracts<- lapply(inputmods, extract_lm)
 
-  #return results
+  #return(extracts), proves this function is working correctly.
+
+  #want to put the extracted model components in a table for side-by-side comparison
   return(extracts)
 
 }
