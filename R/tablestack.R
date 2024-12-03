@@ -1,10 +1,10 @@
 
-#' Generate a stack of model output tables for quick comparison.
+#' stack model information tables on top of each other to allow for a quick comparison between values.
 #'
 #'function to generate the output of multiple models (of the same class) stacked on top of each other to make comparison of values easier. Or, only one model can be specified and the output
 #'will still list the details for the singular model in an efficient way. This makes one large improvement over 'summary(lm)', as the user can define an alpha value beyond just a set 0.05.
 #'
-#' @title stack model information tables on top of each other to allow for a quick comparison between values.
+#' @title Generate a stack of model output tables for quick comparison.
 #' @param model(s) model(s) to display components for. can be just one, or as many as desired for a comparison of values
 #' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
 #' @param alpha_ user-defined alpha; define the threshold for significance. Default is 0.05.
