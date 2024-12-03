@@ -4,7 +4,7 @@
 \alias{extract_coxph}
 \title{function to extract relevant components from a coxph model}
 \usage{
-extract_coxph(lm, alpha = 0.05, output = FALSE)
+extract_coxph(lm, alpha = alpha, output = FALSE)
 }
 \description{
 function to extract relevant components from a coxph model

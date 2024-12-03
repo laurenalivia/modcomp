@@ -4,7 +4,7 @@
 \alias{extract_lm}
 \title{Extract Relevant lm Components}
 \usage{
-extract_lm(lm, alpha = 0.05, output = FALSE)
+extract_lm(lm, alpha = 0.05, output = TRUE)
 }
 \arguments{
 \item{lm}{linear model}

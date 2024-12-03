@@ -13,6 +13,6 @@ library("devtools")
 lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = teengamb)
 lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
 
-extract_lm(lmod1, output=TRUE)
-summary(lmod1)
+comptable(lmod1, lmod2, modeltype = "lm")
+
 
