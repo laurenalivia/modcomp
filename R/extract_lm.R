@@ -1,5 +1,5 @@
 
-#' extract relevant components from a linear model
+#' extract relevant summary components from a linear model
 #'
 #'
 #' The user is able to extract model details while also allowing for a user-defined alpha value of significance. This offers a more flexible model summary output
