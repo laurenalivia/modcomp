@@ -1,9 +1,10 @@
 
 #' extract relevant components from a linear model
 #'
-#' I want the user to be able to define the alpha value, so some resulting values in the general
-#' summary(lm) would need to be made dependent on that change from 0.05).  The output will be used
-#' downstream to supply model information in a display/table for comparison against other similar/nested models.
+#'
+#' The user is able to extract model details while also allowing for a user-defined alpha value of significance. This offers a more flexible model summary output
+#' than the summary() function, where the alpha value is strictly set to 0.05. The output can be used to generate a more flexible model summary dataframe if used directly,
+#' or this function will also be called as an internal function to both 'tablestack' and 'tablecomp', as it allows for more flexibility with the alpha value.
 #'
 #'
 #' @title Extract Relevant lm Components
