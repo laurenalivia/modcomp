@@ -10,7 +10,7 @@
 #'
 #'
 
-comptable<- function (..., alpha= 0.05, modeltype= c("lm", "coxph")) {
+tablestack<- function (..., alpha= 0.05, modeltype= c("lm", "coxph")) {
 
   #Validate that modeltype specified is either 'lm' or 'coxph' using 'match.arg()' function
   modeltype<- match.arg(modeltype)
