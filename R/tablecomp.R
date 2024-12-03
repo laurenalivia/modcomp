@@ -13,7 +13,7 @@
 #'  lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = teengamb)
 #'  lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
 #'  lmod3<- lm(gamble ~ sex + status + income + verbal, data = teengamb)
-#' #determine what comparison_value(s) are important for the table, or user can do one comparison value per table to make viewing even easier. Then create comptable using 'comptable()'.
+#' #determine what comparison_value(s) are important for the table, or user can do one comparison value per table to make viewing even easier. Then create table using 'comptable()'.
 #' tablecomp(lmod1)
 #' tablecomp(lmod1, lmod2, comparison_value= "coefs")
 #' tablecomp(lmod1, lmod2, lmod3, comparison_value= c("coefs", "p_vals", "stars"))
