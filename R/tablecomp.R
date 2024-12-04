@@ -15,6 +15,7 @@
 #' @return table of relevant model components for a quick side-by-side comparison between models
 #' @examples
 #' #supply linear model(s) for output comparison
+#'  data(faraway_teengamb)
 #'  lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = faraway_teengamb)
 #'  lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = faraway_teengamb)
 #'  lmod3<- lm(gamble ~ sex + status + income + verbal, data = faraway_teengamb)
