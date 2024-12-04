@@ -11,4 +11,4 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 URL: https://github.com/laurenalivia/modcomp
 BugReports: https://github.com/laurenalivia/modcomp/issues
-Depends: knitr, faraway
+Depends: knitr
