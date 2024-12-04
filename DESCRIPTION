@@ -13,3 +13,6 @@ BugReports: https://github.com/laurenalivia/modcomp/issues
 Depends: knitr
 Imports: 
     stats
+Suggests: 
+    rmarkdown
+VignetteBuilder: knitr
