@@ -21,10 +21,7 @@ Package 'faraway' version 1.0.8, Source listed: Ide-Smith & Lea, 1988, Journal o
 faraway_teengamb
 }
 \description{
-The following documentation is what has been supplied in the 'faraway' package, version 1.0.8, where this dataset is directly sourced from.
-}
-\details{
-The teengamb data frame has 47 rows and 5 columns. A survey was conducted to study teenage gambling in Britain.
+The following documentation is what has been supplied in the 'faraway' package, version 1.0.8, where this dataset is directly sourced from. The teengamb data frame has 47 rows and 5 columns. A survey was conducted to study teenage gambling in Britain.
 }
 \examples{
 data(faraway_teengamb)
