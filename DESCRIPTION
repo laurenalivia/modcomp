@@ -1,5 +1,5 @@
 Package: modcomp
-Title: Linear Model Summary and Comparison Tables
+Title: Linear Model Summary and Comparison Tables: A package to make regression model comparison even easier!
 Version: 0.0.0.9000
 Authors@R: 
     person("Lauren", "Gould", , "laurengould@ufl.edu", role = c("aut", "cre"))
