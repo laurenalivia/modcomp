@@ -45,5 +45,4 @@ tablecomp(lmod1)
 tablecomp(lmod1, lmod2, comparison_value= 'coefs')
 tablecomp(lmod1, lmod2, lmod3, comparison_value= c('coefs', 'p_vals', 'stars'))
 
-
 }
