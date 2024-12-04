@@ -1,0 +1,20 @@
+#' Study of teenage gambling in Britain (included as 'teengamb' in the 'faraway' package).
+#'
+#' The following documentation is what has been supplied in the 'faraway' package, version 1.0.8, where this dataset is directly sourced from.
+#'
+#' The teengamb data frame has 47 rows and 5 columns. A survey was conducted to study teenage gambling in Britain.
+#'
+#' @format This data frame contains the following columns:
+#' \describe{
+#'  \item{sex}{0=male, 1=female}
+#'  \item{status}{Socioeconomic status score based on parents' occupation}
+#'  \item{income}{in pounds per week}
+#'  \item{verbal}{verbal score in words out of 12 correctly defined}
+#'  \item{gamble}{expenditure on gambling in pounds per year}
+#' }
+#' @source Package 'faraway' version 1.0.8, Source listed: Ide-Smith & Lea, 1988, Journal of Gambling Behavior, 4, 110-118
+#' @examples
+#' data(faraway_teengamb)
+#' head(faraway_teengamb)
+#' str(faraway_teengamb)
+"faraway_teengamb"
