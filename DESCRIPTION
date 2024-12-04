@@ -3,13 +3,7 @@ Title: Linear Model Summary and Comparison Tables
 Version: 0.0.0.9000
 Authors@R: 
     person("Lauren", "Gould", , "laurengould@ufl.edu", role = c("aut", "cre"))
-Description: User is able to extract model details while also allowing for a user-defined alpha value of significance. This offers a more flexible model summary output
-than the summary() function, where the alpha value is strictly set to 0.05. The output can be used to generate a more flexible model summary dataframe if used directly via 'extract_lm()',
-or this function will also be called as an internal function to both 'tablestack' and 'tablecomp', where the output summaries of desired model components can be compared directly between 
-similar/nested models. This offers a great advantage when completing courses like 'Biostatistical Methods I or II', where it is common to have to compare and contrast varioius model components
-between various iterations of a model. These display options, via 'tablestack()' and/or 'tablecomp()' take away the inefficiency of scrolling between various model summaries, and instead offer
-side by side or a stacked view of output for easy viewing and comparison. 
-
+Description: User is able to extract model details while also allowing for a user-defined alpha value of significance. This offers a more flexible model summary output than the summary() function, where the alpha value is strictly set to 0.05. The output can be used to generate a more flexible model summary dataframe if used directly via 'extract_lm()', or this function will also be called as an internal function to both 'tablestack' and 'tablecomp', where the output summaries of desired model components can be compared directly between similar/nested models. This offers a great advantage when completing courses like 'Biostatistical Methods I or II', where it is common to have to compare and contrast various model components between various iterations of a model. These display options, via 'tablestack()' and/or 'tablecomp()' take away the inefficiency of scrolling between various model summaries, and instead offer side by side or a stacked view of output for easy and direct viewing/ comparison. 
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
