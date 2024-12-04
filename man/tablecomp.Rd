@@ -35,9 +35,9 @@ ensure all predictor names will be displayed successfully. A later version would
 }
 \examples{
 #supply linear model(s) for output comparison
- lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = teengamb)
- lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
- lmod3<- lm(gamble ~ sex + status + income + verbal, data = teengamb)
+ lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = faraway_teengamb)
+ lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = faraway_teengamb)
+ lmod3<- lm(gamble ~ sex + status + income + verbal, data = faraway_teengamb)
 #determine what comparison_value(s) are important for the table, or user can do one comparison value per table to make viewing even easier. Then create desired table(s) using 'comptable()'.
 tablecomp(lmod1)
 tablecomp(lmod1, lmod2, comparison_value= 'coefs')

@@ -25,8 +25,8 @@ will still list the details for the singular model in an efficient way. This mak
 }
 \examples{
 #fit linear models
-lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = teengamb)
-lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
+lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = faraway_teengamb)
+lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = faraway_teengamb)
 #use 'tablestack()' to compare outputs displayed; can choose a user-defined alpha if default 0.05 is not the desired level.
  tablestack(lmod1, lmod2, alpha_= 0.1)
 
