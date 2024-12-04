@@ -13,13 +13,13 @@ tablecomp(
 )
 }
 \arguments{
+\item{...}{model(s) to display components for. can be just one, or as many as desired for side-by-side comparison of values}
+
 \item{alpha_}{user-defined alpha; define the threshold for significance. Default is 0.05.}
 
 \item{modeltype}{'lm' for linear model, 'coxph' for cox proportional hazards model.}
 
 \item{comparison_value}{model components to be compared in the output table. Can specify one, multiple, or all.}
-
-\item{model_extract}{model(s) to display components for. can be just one, or as many as desired for side-by-side comparison of values}
 }
 \value{
 table of relevant model components for a quick side-by-side comparison between models
