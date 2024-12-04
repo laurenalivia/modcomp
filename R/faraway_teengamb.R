@@ -1,8 +1,7 @@
 #' Study of teenage gambling in Britain (included as 'teengamb' in the 'faraway' package).
 #'
-#' The following documentation is what has been supplied in the 'faraway' package, version 1.0.8, where this dataset is directly sourced from.
+#' The following documentation is what has been supplied in the 'faraway' package, version 1.0.8, where this dataset is directly sourced from. The teengamb data frame has 47 rows and 5 columns. A survey was conducted to study teenage gambling in Britain.
 #'
-#' The teengamb data frame has 47 rows and 5 columns. A survey was conducted to study teenage gambling in Britain.
 #'
 #' @format This data frame contains the following columns:
 #' \describe{
