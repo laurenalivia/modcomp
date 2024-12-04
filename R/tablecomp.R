@@ -25,7 +25,7 @@
 #' tablecomp(lmod1, lmod2, comparison_value= 'coefs')
 #' tablecomp(lmod1, lmod2, lmod3, comparison_value= c('coefs', 'p_vals', 'stars'))
 #'
-#'
+#' @export
 
 tablecomp <- function(..., alpha_ = 0.05, modeltype = c("lm", "coxph"), comparison_value = c("coefs", "stderrs", "t_vals", "p_vals", "stars", "lower_confints", "higher_confints",
     "rsq", "adj.rsq", "aic", "alpha")) {

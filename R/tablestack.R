@@ -18,6 +18,7 @@
 #' #if default 0.05 is not the desired level.
 #'  tablestack(lmod1, lmod2, alpha_= 0.1)
 #'
+#' @export
 
 tablestack <- function(..., alpha_ = 0.05, modeltype = c("lm", "coxph")) {
 
