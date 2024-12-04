@@ -13,7 +13,7 @@
 #' @param alpha_ user-defined alpha; define the threshold for significance. Default is 0.05.
 #' @param comparison_value model components to be compared in the output table. Can specify one, multiple, or all.
 #' @return table of relevant model components for a quick side-by-side comparison between models
-#'@examples
+#' @examples
 #' #supply linear model(s) for output comparison
 #'  lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = teengamb)
 #'  lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = teengamb)
