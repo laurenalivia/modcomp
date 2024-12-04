@@ -40,8 +40,8 @@ ensure all predictor names will be displayed successfully. A later version would
  lmod3<- lm(gamble ~ sex + status + income + verbal, data = teengamb)
 #determine what comparison_value(s) are important for the table, or user can do one comparison value per table to make viewing even easier. Then create desired table(s) using 'comptable()'.
 tablecomp(lmod1)
-tablecomp(lmod1, lmod2, comparison_value= "coefs")
-tablecomp(lmod1, lmod2, lmod3, comparison_value= c("coefs", "p_vals", "stars"))
+tablecomp(lmod1, lmod2, comparison_value= 'coefs')
+tablecomp(lmod1, lmod2, lmod3, comparison_value= c('coefs', 'p_vals', 'stars'))
 
 
 }
