@@ -1,0 +1,227 @@
+
+R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "modcomp"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('modcomp')
+Loading required package: knitr
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("extract_lm")
+> ### * extract_lm
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: extract_lm
+> ### Title: Extract Relevant lm Components
+> ### Aliases: extract_lm
+> 
+> ### ** Examples
+> 
+> #fit linear model
+>  data(faraway_teengamb)
+>  lmod<- lm(gamble ~ sex + status + income + verbal + sex:income, data = faraway_teengamb)
+> #extract components, supplying 'output=TRUE' to print output
+>  extract_lm(lmod)
+                  coefs    stderrs     t_vals       p_vals stars lower_confints
+(Intercept) 19.25942923 15.7963493  1.2192329 2.297239e-01          -12.6419453
+sex          4.06362471 11.5161176  0.3528641 7.259980e-01          -19.1936466
+status      -0.04876258  0.2597806 -0.1877068 8.520324e-01           -0.5734002
+income       6.19884604  1.0259128  6.0422739 3.767090e-07   ***      4.1269732
+verbal      -2.60864357  1.9938604 -1.3083381 1.980461e-01           -6.6353263
+sex:income  -6.43682906  2.1433737 -3.0031296 4.538483e-03    **    -10.7654601
+            higher_confints      rsq   adj.rsq     aic alpha
+(Intercept)      51.1608038 0.612059 0.5647491 290.831  0.05
+sex              27.3208960 0.612059 0.5647491 290.831  0.05
+status            0.4758751 0.612059 0.5647491 290.831  0.05
+income            8.2707189 0.612059 0.5647491 290.831  0.05
+verbal            1.4180392 0.612059 0.5647491 290.831  0.05
+sex:income       -2.1081980 0.612059 0.5647491 290.831  0.05
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("faraway_teengamb")
+> ### * faraway_teengamb
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: faraway_teengamb
+> ### Title: faraway_teengamb
+> ### Aliases: faraway_teengamb
+> 
+> ### ** Examples
+> 
+> data(faraway_teengamb)
+> head(faraway_teengamb)
+  sex status income verbal gamble
+1   1     51   2.00      8    0.0
+2   1     28   2.50      8    0.0
+3   1     37   2.00      6    0.0
+4   1     28   7.00      4    7.3
+5   1     65   2.00      8   19.6
+6   1     61   3.47      6    0.1
+> str(faraway_teengamb)
+'data.frame':	47 obs. of  5 variables:
+ $ sex   : int  1 1 1 1 1 1 1 1 1 1 ...
+ $ status: int  51 28 37 28 65 61 28 27 43 18 ...
+ $ income: num  2 2.5 2 7 2 3.47 5.5 6.42 2 6 ...
+ $ verbal: int  8 8 6 4 8 6 7 5 6 7 ...
+ $ gamble: num  0 0 0 7.3 19.6 0.1 1.45 6.6 1.7 0.1 ...
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tablecomp")
+> ### * tablecomp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tablecomp
+> ### Title: Generate Model Comparison Table
+> ### Aliases: tablecomp
+> 
+> ### ** Examples
+> 
+> #supply linear model(s) for output comparison
+>  data(faraway_teengamb)
+>  lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = faraway_teengamb)
+>  lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = faraway_teengamb)
+>  lmod3<- lm(gamble ~ sex + status + income + verbal, data = faraway_teengamb)
+> #determine what comparison_value(s) are important for the table, or user can do one comparison value per table to make viewing
+> #even easier. Then create desired table(s) using 'comptable()'.
+> tablecomp(lmod1)
+All models are of type specified: lm 
+Model Output Displays in the Order Specified in the Input of 'tablecomp(), when choosing to compare more than one model. 
+Make sure the largest model is displayed first for nested model comparison, to ensure all predictor names are displayed 
+ 
+
+
+|            |       coefs|    stderrs|     t_vals|    p_vals|stars | lower_confints| higher_confints|       rsq|   adj.rsq|      aic| alpha|
+|:-----------|-----------:|----------:|----------:|---------:|:-----|--------------:|---------------:|---------:|---------:|--------:|-----:|
+|(Intercept) |  27.6354030| 17.6217643|  1.5682540| 0.1249008|      |     -8.0079797|      63.2787857| 0.6243438| 0.5569184| 293.3186|  0.05|
+|sex         | -33.0132447| 35.0529702| -0.9418102| 0.3520875|      |   -103.9145693|      37.8880800| 0.6243438| 0.5569184| 293.3186|  0.05|
+|status      |  -0.1455658|  0.3315805| -0.4390059| 0.6630799|      |     -0.8162507|       0.5251191| 0.6243438| 0.5569184| 293.3186|  0.05|
+|income      |   6.0290789|  1.0538467|  5.7210206| 0.0000013|***   |      3.8974727|       8.1606852| 0.6243438| 0.5569184| 293.3186|  0.05|
+|verbal      |  -2.9747594|  2.4265408| -1.2259260| 0.2275778|      |     -7.8829014|       1.9333827| 0.6243438| 0.5569184| 293.3186|  0.05|
+|sex:status  |   0.3528830|  0.5492327|  0.6425018| 0.5243068|      |     -0.7580451|       1.4638111| 0.6243438| 0.5569184| 293.3186|  0.05|
+|sex:income  |  -5.3477745|  2.4243570| -2.2058528| 0.0333540|*     |    -10.2514993|      -0.4440497| 0.6243438| 0.5569184| 293.3186|  0.05|
+|sex:verbal  |   2.8355168|  4.5973026|  0.6167784| 0.5409650|      |     -6.4634054|      12.1344390| 0.6243438| 0.5569184| 293.3186|  0.05|
+> tablecomp(lmod1, lmod2, comparison_value= 'coefs')
+All models are of type specified: lm 
+Model Output Displays in the Order Specified in the Input of 'tablecomp(), when choosing to compare more than one model. 
+Make sure the largest model is displayed first for nested model comparison, to ensure all predictor names are displayed 
+ 
+
+
+|            |       coefs|      coefs|
+|:-----------|-----------:|----------:|
+|(Intercept) |  27.6354030| 19.2594292|
+|sex         | -33.0132447|  4.0636247|
+|status      |  -0.1455658| -0.0487626|
+|income      |   6.0290789|  6.1988460|
+|verbal      |  -2.9747594| -2.6086436|
+|sex:status  |   0.3528830|         NA|
+|sex:income  |  -5.3477745| -6.4368291|
+|sex:verbal  |   2.8355168|         NA|
+> tablecomp(lmod1, lmod2, lmod3, comparison_value= c('coefs', 'p_vals', 'stars'))
+All models are of type specified: lm 
+Model Output Displays in the Order Specified in the Input of 'tablecomp(), when choosing to compare more than one model. 
+Make sure the largest model is displayed first for nested model comparison, to ensure all predictor names are displayed 
+ 
+
+
+|            |       coefs|    p_vals|stars |      coefs|    p_vals|stars |       coefs|    p_vals|stars |
+|:-----------|-----------:|---------:|:-----|----------:|---------:|:-----|-----------:|---------:|:-----|
+|(Intercept) |  27.6354030| 0.1249008|      | 19.2594292| 0.2297239|      |  22.5556506| 0.1967736|      |
+|sex         | -33.0132447| 0.3520875|      |  4.0636247| 0.7259980|      | -22.1183301| 0.0101118|*     |
+|status      |  -0.1455658| 0.6630799|      | -0.0487626| 0.8520324|      |   0.0522338| 0.8534869|      |
+|income      |   6.0290789| 0.0000013|***   |  6.1988460| 0.0000004|***   |   4.9619792| 0.0000179|***   |
+|verbal      |  -2.9747594| 0.2275778|      | -2.6086436| 0.1980461|      |  -2.9594935| 0.1803109|      |
+|sex:status  |   0.3528830| 0.5243068|      |         NA|        NA|NA    |          NA|        NA|NA    |
+|sex:income  |  -5.3477745| 0.0333540|*     | -6.4368291| 0.0045385|**    |          NA|        NA|NA    |
+|sex:verbal  |   2.8355168| 0.5409650|      |         NA|        NA|NA    |          NA|        NA|NA    |
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("tablestack")
+> ### * tablestack
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: tablestack
+> ### Title: Generate a stack of model output tables for quick comparison.
+> ### Aliases: tablestack
+> 
+> ### ** Examples
+> 
+> #fit linear models
+> data(faraway_teengamb)
+> lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = faraway_teengamb)
+> lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = faraway_teengamb)
+> #use 'tablestack()' to compare outputs displayed; can choose a user-defined alpha
+> #if default 0.05 is not the desired level.
+>  tablestack(lmod1, lmod2, alpha_= 0.1)
+All models are of type specified: lm 
+
+
+|            |       coefs|    stderrs|     t_vals|    p_vals|stars | lower_confints| higher_confints|       rsq|   adj.rsq|      aic| alpha|
+|:-----------|-----------:|----------:|----------:|---------:|:-----|--------------:|---------------:|---------:|---------:|--------:|-----:|
+|(Intercept) |  27.6354030| 17.6217643|  1.5682540| 0.1249008|.     |     -2.0550693|      57.3258754| 0.6243438| 0.5569184| 293.3186|   0.1|
+|sex         | -33.0132447| 35.0529702| -0.9418102| 0.3520875|      |    -92.0731222|      26.0466328| 0.6243438| 0.5569184| 293.3186|   0.1|
+|status      |  -0.1455658|  0.3315805| -0.4390059| 0.6630799|      |     -0.7042375|       0.4131059| 0.6243438| 0.5569184| 293.3186|   0.1|
+|income      |   6.0290789|  1.0538467|  5.7210206| 0.0000013|***   |      4.2534788|       7.8046791| 0.6243438| 0.5569184| 293.3186|   0.1|
+|verbal      |  -2.9747594|  2.4265408| -1.2259260| 0.2275778|      |     -7.0631776|       1.1136589| 0.6243438| 0.5569184| 293.3186|   0.1|
+|sex:status  |   0.3528830|  0.5492327|  0.6425018| 0.5243068|      |     -0.5725056|       1.2782716| 0.6243438| 0.5569184| 293.3186|   0.1|
+|sex:income  |  -5.3477745|  2.4243570| -2.2058528| 0.0333540|*     |     -9.4325132|      -1.2630358| 0.6243438| 0.5569184| 293.3186|   0.1|
+|sex:verbal  |   2.8355168|  4.5973026|  0.6167784| 0.5409650|      |     -4.9103639|      10.5813976| 0.6243438| 0.5569184| 293.3186|   0.1|
+
+|            |      coefs|    stderrs|     t_vals|    p_vals|stars | lower_confints| higher_confints|      rsq|   adj.rsq|     aic| alpha|
+|:-----------|----------:|----------:|----------:|---------:|:-----|--------------:|---------------:|--------:|---------:|-------:|-----:|
+|(Intercept) | 19.2594292| 15.7963493|  1.2192329| 0.2297239|      |     -7.3238995|      45.8427580| 0.612059| 0.5647491| 290.831|   0.1|
+|sex         |  4.0636247| 11.5161176|  0.3528641| 0.7259980|      |    -15.3165962|      23.4438457| 0.612059| 0.5647491| 290.831|   0.1|
+|status      | -0.0487626|  0.2597806| -0.1877068| 0.8520324|      |     -0.4859417|       0.3884165| 0.612059| 0.5647491| 290.831|   0.1|
+|income      |  6.1988460|  1.0259128|  6.0422739| 0.0000004|***   |      4.4723600|       7.9253321| 0.612059| 0.5647491| 290.831|   0.1|
+|verbal      | -2.6086436|  1.9938604| -1.3083381| 0.1980461|.     |     -5.9640674|       0.7467802| 0.612059| 0.5647491| 290.831|   0.1|
+|sex:income  | -6.4368291|  2.1433737| -3.0031296| 0.0045385|**    |    -10.0438655|      -2.8297926| 0.612059| 0.5647491| 290.831|   0.1|
+> 
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.078 0.009 0.092 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
