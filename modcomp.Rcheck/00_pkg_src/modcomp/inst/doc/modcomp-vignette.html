@@ -10,6 +10,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+<meta name="author" content="Lauren Gould" />
 
 
 <title>modcomp-vignette</title>
@@ -337,11 +338,869 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 <h1 class="title toc-ignore">modcomp-vignette</h1>
+<h4 class="author">Lauren Gould</h4>
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(modcomp)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; Loading required package: knitr</span></span></code></pre></div>
+<div id="linear-model-comparison-at-a-glance-a-package-to-make-regression-model-comparisons-even-easier" class="section level2">
+<h2>Linear Model Comparison at a Glance: A package to make regression
+model comparisons even easier!</h2>
+<p>The package ‘modcomp’ offers users a more flexible way to review
+linear model summary information, providing an advantage over the
+‘summary()’ function due to the ability for users to define their alpha
+value of significance (the summary() function only offers output
+relative to a set 0.05 level of significance, which isn’t always the
+desired level). Even more central to this package, however, are the
+model comparison functions. This package enables users to view desired
+model summary components for multiple linear models (perhaps various
+nested models), in either a stacked fashion via ‘tablestack()’ (model
+summary tables output directly on top of each other), or in a
+side-by-side table via ‘tablecomp()’, with user-defined model components
+as the comparison value(s). <strong>This package would be of particular
+interest to users actively working through a graduate program in
+biostatistics, as directly comparing linear model characteristics (e.g,
+beta coefficient estimates, significance of those estimates, AIC values)
+between an initial model and subsequent nested/similar models after
+making changes, is a <em>very</em> common task</strong>, and scrolling
+between numerous summary outputs crafted solely from the ‘summary()’
+function is extremely tedious and inefficient.</p>
+</div>
+<div id="installing-and-loading-modcomp." class="section level2">
+<h2>Installing and Loading ‘modcomp’.</h2>
+<p>‘modcomp’ can be installed in one of two ways: downloading of the
+tar.gz file (‘modcomp_0.0.0.9000.tar.gz’) containing the package, or
+download through github. Code to run is indented and suppressed with a
+comment ‘#’.</p>
+<div id="option-1-install-directly-from-the-tar.gz-file" class="section level3">
+<h3>Option 1: install directly from the tar.gz file</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># replace &#39;path_to_file&#39; with path to the downloaded tar.gz file</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="co">#install.packages(path_to_file, repos= NULL, type= &quot;source&quot;)</span></span></code></pre></div>
+</div>
+<div id="option-2-install-via-github" class="section level3">
+<h3>Option 2: install via github</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># must have package &quot;devtools&quot; installed, and added to library</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="co">#install.packages(&quot;devtools&quot;)</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="co">#library(devtools)</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  </span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># install &#39;modcomp&#39; from github using the following code</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="co">#install_github(&quot;laurenalivia/modcomp&quot;)</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  </span></code></pre></div>
+</div>
+</div>
+<div id="add-modcomp-to-library." class="section level2">
+<h2>Add ‘modcomp’ to library.</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(modcomp)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; Loading required package: knitr</span></span></code></pre></div>
+</div>
+<div id="example-usage-1." class="section level2">
+<h2>Example Usage 1.</h2>
+<div id="the-extract_lm-function." class="section level3">
+<h3>The ‘extract_lm()’ function.</h3>
+<div id="extract-relevant-summary-components-from-a-linear-model-as-a-dataframe." class="section level4">
+<h4>Extract relevant summary components from a linear model as a
+dataframe.</h4>
+<p>The extract_lm() function allows users to extract relevant summary
+components from a linear model, with an ability to adjust the alpha
+value of significance. The output can be used to generate a more
+flexible model summary dataframe if used directly, or this function will
+also be called as an internal function to both ‘tablestack()’ and
+‘tablecomp()’. The ‘stars’ associated with p value significance are as
+follows:<br />
+- p value is less than or equal to 2% of alpha: “***”.<br />
+- p value is less than or equal to 20% of alpha: “**”.<br />
+- p value is less than or equal to alpha: “*&quot;.<br />
+- p value is less than or equal to 2alpha:”.”.<br />
+- else: ” ”</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># view supporting documentation with information regarding what can be supplied as input:</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>?extract_lm</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># fit linear model</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a> <span class="fu">data</span>(faraway_teengamb)</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a> lmod<span class="ot">&lt;-</span><span class="fu">lm</span>(gamble<span class="sc">~</span>sex<span class="sc">+</span>status<span class="sc">+</span>income<span class="sc">+</span>verbal<span class="sc">+</span>sex<span class="sc">:</span>income, <span class="at">data=</span>faraway_teengamb)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a> </span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co"># extract summary components (default alpha value is set to 0.05)</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a> <span class="fu">extract_lm</span>(lmod)</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt;                   coefs    stderrs     t_vals       p_vals stars lower_confints</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; (Intercept) 19.25942923 15.7963493  1.2192329 2.297239e-01          -12.6419453</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; sex          4.06362471 11.5161176  0.3528641 7.259980e-01          -19.1936466</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; status      -0.04876258  0.2597806 -0.1877068 8.520324e-01           -0.5734002</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; income       6.19884604  1.0259128  6.0422739 3.767090e-07   ***      4.1269732</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; verbal      -2.60864357  1.9938604 -1.3083381 1.980461e-01           -6.6353263</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; sex:income  -6.43682906  2.1433737 -3.0031296 4.538483e-03    **    -10.7654601</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt;             higher_confints      rsq   adj.rsq     aic alpha</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; (Intercept)      51.1608038 0.612059 0.5647491 290.831  0.05</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; sex              27.3208960 0.612059 0.5647491 290.831  0.05</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; status            0.4758751 0.612059 0.5647491 290.831  0.05</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; income            8.2707189 0.612059 0.5647491 290.831  0.05</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; verbal            1.4180392 0.612059 0.5647491 290.831  0.05</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; sex:income       -2.1081980 0.612059 0.5647491 290.831  0.05</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a> </span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co"># example using a different alpha value, if that is desired</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a> <span class="fu">extract_lm</span>(lmod, <span class="at">alpha =</span> <span class="fl">0.1</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt;                   coefs    stderrs     t_vals       p_vals stars lower_confints</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; (Intercept) 19.25942923 15.7963493  1.2192329 2.297239e-01           -7.3238995</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; sex          4.06362471 11.5161176  0.3528641 7.259980e-01          -15.3165962</span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt; status      -0.04876258  0.2597806 -0.1877068 8.520324e-01           -0.4859417</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt; income       6.19884604  1.0259128  6.0422739 3.767090e-07   ***      4.4723600</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt; verbal      -2.60864357  1.9938604 -1.3083381 1.980461e-01     .     -5.9640674</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt; sex:income  -6.43682906  2.1433737 -3.0031296 4.538483e-03    **    -10.0438655</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt;             higher_confints      rsq   adj.rsq     aic alpha</span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt; (Intercept)      45.8427580 0.612059 0.5647491 290.831   0.1</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt; sex              23.4438457 0.612059 0.5647491 290.831   0.1</span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt; status            0.3884165 0.612059 0.5647491 290.831   0.1</span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt; income            7.9253321 0.612059 0.5647491 290.831   0.1</span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt; verbal            0.7467802 0.612059 0.5647491 290.831   0.1</span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt; sex:income       -2.8297926 0.612059 0.5647491 290.831   0.1</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="example-usage-2." class="section level2">
+<h2>Example Usage 2.</h2>
+<div id="the-tablestack-function." class="section level3">
+<h3>The ‘tablestack()’ function.</h3>
+<div id="generate-a-stack-of-model-output-tables-for-quick-comparison." class="section level4">
+<h4>Generate a stack of model output tables for quick comparison.</h4>
+<p>The tablestack() function allows the user to stack model information
+tables on top of each other to allow for a quick and comprehensive
+comparison between multiple linear models. This is especially useful in
+place of the producing multiple summaries via the ‘summary()’ function,
+as that method produces too much white space to scroll through and
+doesn’t allow for a direct alignment of the summary outputs to make
+comparison efficient. That is where this function, tablestack() comes in
+handy! Note: Model summaries are displayed in the order they are entered
+as input, with the top being the first model specified, and so on.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># view supporting documentation with information regarding what can be supplied as input:</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  ?tablestack</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># fit linear models</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  lmod1<span class="ot">&lt;-</span><span class="fu">lm</span>(gamble<span class="sc">~</span>sex<span class="sc">+</span>status<span class="sc">+</span>income<span class="sc">+</span>verbal<span class="sc">+</span>sex<span class="sc">:</span>status<span class="sc">+</span>sex<span class="sc">:</span>income<span class="sc">+</span>sex<span class="sc">:</span>verbal,<span class="at">data=</span>faraway_teengamb)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  lmod2<span class="ot">&lt;-</span><span class="fu">lm</span>(gamble<span class="sc">~</span>sex<span class="sc">+</span>status<span class="sc">+</span>income<span class="sc">+</span>verbal<span class="sc">+</span>sex<span class="sc">:</span>income, <span class="at">data =</span> faraway_teengamb)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co"># use &#39;tablestack()&#39; to compare outputs displayed this more closely resembles what will output in your console:</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">tablestack</span>(lmod1, lmod2, <span class="at">alpha_=</span> <span class="fl">0.1</span>))</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; All models are of type specified: lm </span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; &lt;table class=&quot;kable_wrapper&quot;&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; &lt;tbody&gt;</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;   &lt;tr&gt;</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt;    &lt;td&gt; </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; |            |       coefs|    stderrs|     t_vals|    p_vals|stars | lower_confints| higher_confints|       rsq|   adj.rsq|      aic| alpha|</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; |:-----------|-----------:|----------:|----------:|---------:|:-----|--------------:|---------------:|---------:|---------:|--------:|-----:|</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; |(Intercept) |  27.6354030| 17.6217643|  1.5682540| 0.1249008|.     |     -2.0550693|      57.3258754| 0.6243438| 0.5569184| 293.3186|   0.1|</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; |sex         | -33.0132447| 35.0529702| -0.9418102| 0.3520875|      |    -92.0731222|      26.0466328| 0.6243438| 0.5569184| 293.3186|   0.1|</span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; |status      |  -0.1455658|  0.3315805| -0.4390059| 0.6630799|      |     -0.7042375|       0.4131059| 0.6243438| 0.5569184| 293.3186|   0.1|</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; |income      |   6.0290789|  1.0538467|  5.7210206| 0.0000013|***   |      4.2534788|       7.8046791| 0.6243438| 0.5569184| 293.3186|   0.1|</span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt; |verbal      |  -2.9747594|  2.4265408| -1.2259260| 0.2275778|      |     -7.0631776|       1.1136589| 0.6243438| 0.5569184| 293.3186|   0.1|</span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt; |sex:status  |   0.3528830|  0.5492327|  0.6425018| 0.5243068|      |     -0.5725056|       1.2782716| 0.6243438| 0.5569184| 293.3186|   0.1|</span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt; |sex:income  |  -5.3477745|  2.4243570| -2.2058528| 0.0333540|*     |     -9.4325132|      -1.2630358| 0.6243438| 0.5569184| 293.3186|   0.1|</span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt; |sex:verbal  |   2.8355168|  4.5973026|  0.6167784| 0.5409650|      |     -4.9103639|      10.5813976| 0.6243438| 0.5569184| 293.3186|   0.1|</span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co">#&gt;  &lt;/td&gt;</span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co">#&gt;    &lt;td&gt; </span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a><span class="co">#&gt; |            |      coefs|    stderrs|     t_vals|    p_vals|stars | lower_confints| higher_confints|      rsq|   adj.rsq|     aic| alpha|</span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a><span class="co">#&gt; |:-----------|----------:|----------:|----------:|---------:|:-----|--------------:|---------------:|--------:|---------:|-------:|-----:|</span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a><span class="co">#&gt; |(Intercept) | 19.2594292| 15.7963493|  1.2192329| 0.2297239|      |     -7.3238995|      45.8427580| 0.612059| 0.5647491| 290.831|   0.1|</span></span>
+<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co">#&gt; |sex         |  4.0636247| 11.5161176|  0.3528641| 0.7259980|      |    -15.3165962|      23.4438457| 0.612059| 0.5647491| 290.831|   0.1|</span></span>
+<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a><span class="co">#&gt; |status      | -0.0487626|  0.2597806| -0.1877068| 0.8520324|      |     -0.4859417|       0.3884165| 0.612059| 0.5647491| 290.831|   0.1|</span></span>
+<span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a><span class="co">#&gt; |income      |  6.1988460|  1.0259128|  6.0422739| 0.0000004|***   |      4.4723600|       7.9253321| 0.612059| 0.5647491| 290.831|   0.1|</span></span>
+<span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a><span class="co">#&gt; |verbal      | -2.6086436|  1.9938604| -1.3083381| 0.1980461|.     |     -5.9640674|       0.7467802| 0.612059| 0.5647491| 290.831|   0.1|</span></span>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a><span class="co">#&gt; |sex:income  | -6.4368291|  2.1433737| -3.0031296| 0.0045385|**    |    -10.0438655|      -2.8297926| 0.612059| 0.5647491| 290.831|   0.1|</span></span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a><span class="co">#&gt;  &lt;/td&gt;</span></span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a><span class="co">#&gt;   &lt;/tr&gt;</span></span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a><span class="co">#&gt; &lt;/tbody&gt;</span></span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a><span class="co">#&gt; &lt;/table&gt;</span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a> </span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a><span class="co"># or this is just using it straight, which works great but can be forced side-by-side upon knitting in rmarkdown. This can be fixed in a future version.</span></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a>  <span class="fu">tablestack</span>(lmod1, lmod2, <span class="at">alpha_ =</span> <span class="fl">0.1</span>)</span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a><span class="co">#&gt; All models are of type specified: lm</span></span></code></pre></div>
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="8%" />
+<col width="8%" />
+<col width="7%" />
+<col width="4%" />
+<col width="11%" />
+<col width="12%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="4%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">coefs</th>
+<th align="right">stderrs</th>
+<th align="right">t_vals</th>
+<th align="right">p_vals</th>
+<th align="left">stars</th>
+<th align="right">lower_confints</th>
+<th align="right">higher_confints</th>
+<th align="right">rsq</th>
+<th align="right">adj.rsq</th>
+<th align="right">aic</th>
+<th align="right">alpha</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">27.6354030</td>
+<td align="right">17.6217643</td>
+<td align="right">1.5682540</td>
+<td align="right">0.1249008</td>
+<td align="left">.</td>
+<td align="right">-2.0550693</td>
+<td align="right">57.3258754</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="even">
+<td align="left">sex</td>
+<td align="right">-33.0132447</td>
+<td align="right">35.0529702</td>
+<td align="right">-0.9418102</td>
+<td align="right">0.3520875</td>
+<td align="left"></td>
+<td align="right">-92.0731222</td>
+<td align="right">26.0466328</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="odd">
+<td align="left">status</td>
+<td align="right">-0.1455658</td>
+<td align="right">0.3315805</td>
+<td align="right">-0.4390059</td>
+<td align="right">0.6630799</td>
+<td align="left"></td>
+<td align="right">-0.7042375</td>
+<td align="right">0.4131059</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">6.0290789</td>
+<td align="right">1.0538467</td>
+<td align="right">5.7210206</td>
+<td align="right">0.0000013</td>
+<td align="left">***</td>
+<td align="right">4.2534788</td>
+<td align="right">7.8046791</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="odd">
+<td align="left">verbal</td>
+<td align="right">-2.9747594</td>
+<td align="right">2.4265408</td>
+<td align="right">-1.2259260</td>
+<td align="right">0.2275778</td>
+<td align="left"></td>
+<td align="right">-7.0631776</td>
+<td align="right">1.1136589</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="even">
+<td align="left">sex:status</td>
+<td align="right">0.3528830</td>
+<td align="right">0.5492327</td>
+<td align="right">0.6425018</td>
+<td align="right">0.5243068</td>
+<td align="left"></td>
+<td align="right">-0.5725056</td>
+<td align="right">1.2782716</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="odd">
+<td align="left">sex:income</td>
+<td align="right">-5.3477745</td>
+<td align="right">2.4243570</td>
+<td align="right">-2.2058528</td>
+<td align="right">0.0333540</td>
+<td align="left">*</td>
+<td align="right">-9.4325132</td>
+<td align="right">-1.2630358</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="even">
+<td align="left">sex:verbal</td>
+<td align="right">2.8355168</td>
+<td align="right">4.5973026</td>
+<td align="right">0.6167784</td>
+<td align="right">0.5409650</td>
+<td align="left"></td>
+<td align="right">-4.9103639</td>
+<td align="right">10.5813976</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.1</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="8%" />
+<col width="4%" />
+<col width="12%" />
+<col width="12%" />
+<col width="7%" />
+<col width="8%" />
+<col width="6%" />
+<col width="4%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">coefs</th>
+<th align="right">stderrs</th>
+<th align="right">t_vals</th>
+<th align="right">p_vals</th>
+<th align="left">stars</th>
+<th align="right">lower_confints</th>
+<th align="right">higher_confints</th>
+<th align="right">rsq</th>
+<th align="right">adj.rsq</th>
+<th align="right">aic</th>
+<th align="right">alpha</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">19.2594292</td>
+<td align="right">15.7963493</td>
+<td align="right">1.2192329</td>
+<td align="right">0.2297239</td>
+<td align="left"></td>
+<td align="right">-7.3238995</td>
+<td align="right">45.8427580</td>
+<td align="right">0.612059</td>
+<td align="right">0.5647491</td>
+<td align="right">290.831</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="even">
+<td align="left">sex</td>
+<td align="right">4.0636247</td>
+<td align="right">11.5161176</td>
+<td align="right">0.3528641</td>
+<td align="right">0.7259980</td>
+<td align="left"></td>
+<td align="right">-15.3165962</td>
+<td align="right">23.4438457</td>
+<td align="right">0.612059</td>
+<td align="right">0.5647491</td>
+<td align="right">290.831</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="odd">
+<td align="left">status</td>
+<td align="right">-0.0487626</td>
+<td align="right">0.2597806</td>
+<td align="right">-0.1877068</td>
+<td align="right">0.8520324</td>
+<td align="left"></td>
+<td align="right">-0.4859417</td>
+<td align="right">0.3884165</td>
+<td align="right">0.612059</td>
+<td align="right">0.5647491</td>
+<td align="right">290.831</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">6.1988460</td>
+<td align="right">1.0259128</td>
+<td align="right">6.0422739</td>
+<td align="right">0.0000004</td>
+<td align="left">***</td>
+<td align="right">4.4723600</td>
+<td align="right">7.9253321</td>
+<td align="right">0.612059</td>
+<td align="right">0.5647491</td>
+<td align="right">290.831</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="odd">
+<td align="left">verbal</td>
+<td align="right">-2.6086436</td>
+<td align="right">1.9938604</td>
+<td align="right">-1.3083381</td>
+<td align="right">0.1980461</td>
+<td align="left">.</td>
+<td align="right">-5.9640674</td>
+<td align="right">0.7467802</td>
+<td align="right">0.612059</td>
+<td align="right">0.5647491</td>
+<td align="right">290.831</td>
+<td align="right">0.1</td>
+</tr>
+<tr class="even">
+<td align="left">sex:income</td>
+<td align="right">-6.4368291</td>
+<td align="right">2.1433737</td>
+<td align="right">-3.0031296</td>
+<td align="right">0.0045385</td>
+<td align="left">**</td>
+<td align="right">-10.0438655</td>
+<td align="right">-2.8297926</td>
+<td align="right">0.612059</td>
+<td align="right">0.5647491</td>
+<td align="right">290.831</td>
+<td align="right">0.1</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="example-usage-3." class="section level2">
+<h2>Example Usage 3.</h2>
+<div id="the-tablecomp-function." class="section level3">
+<h3>The ‘tablecomp()’ function.</h3>
+<div id="generate-a-table-of-relevant-model-components-for-a-quick-side-by-side-comparison-between-models." class="section level4">
+<h4>Generate a table of relevant model components for a quick
+side-by-side comparison between models.</h4>
+<p>This function is arguably the <em>most</em> useful function in the
+package, as it offers the ability to generate a <em>single</em> table
+for the direct comparison of the user’s desired values between specified
+linear models. Linear model predictors are displayed on the left of the
+table, with each model occupying its own column/ set of columns. The
+values displayed in the table are specified by the user, and can be just
+one, a few, or all values. However, for the effectiveness of the
+comparison and keeping to the spirit of proving a ‘quick’ comparison
+that maximizes viewing efficiency/clarity, fewer values are
+recommended.</p>
+<p>One quirk here is that models are displayed left to right in the
+order they are supplied in the funtion. A later version would fix the
+lack of model labels, but for now this is the method to identify the
+models being compared–by order. It is also advised to supply the largest
+model first (especially if comparing nested models), as it will ensure
+all predictor names will be displayed successfully. A later version
+would fix this quirk as well.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># view supporting documentation with information regarding what can be supplied as input:</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  ?tablecomp</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co"># supply linear model(s) for output comparison</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  lmod1<span class="ot">&lt;-</span><span class="fu">lm</span>(gamble<span class="sc">~</span>sex<span class="sc">+</span>status<span class="sc">+</span>income<span class="sc">+</span>verbal<span class="sc">+</span>sex<span class="sc">:</span>status<span class="sc">+</span>sex<span class="sc">:</span>income<span class="sc">+</span>sex<span class="sc">:</span>verbal,<span class="at">data=</span>faraway_teengamb)</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  lmod2<span class="ot">&lt;-</span><span class="fu">lm</span>(gamble<span class="sc">~</span>sex<span class="sc">+</span>status<span class="sc">+</span>income<span class="sc">+</span>verbal<span class="sc">+</span>sex<span class="sc">:</span>income, <span class="at">data =</span> faraway_teengamb)</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  lmod3<span class="ot">&lt;-</span><span class="fu">lm</span>(gamble<span class="sc">~</span>sex<span class="sc">+</span>status<span class="sc">+</span>income<span class="sc">+</span>verbal, <span class="at">data =</span> faraway_teengamb)</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>   </span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># determine what comparison_value(s) are important for the table, or user can do one comparison value</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co"># per table to make viewing #even easier. Then create desired table(s) using &#39;comptable()&#39;.</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  </span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  <span class="fu">tablecomp</span>(lmod1) <span class="co">#all available components for display for one single model. </span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; All models are of type specified: lm </span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; Model Output Displays in the Order Specified in the Input of &#39;tablecomp(), when choosing to compare more than one model. </span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; Make sure the largest model is displayed first for nested model comparison, to ensure all predictor names are displayed </span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="9%" />
+<col width="8%" />
+<col width="8%" />
+<col width="7%" />
+<col width="4%" />
+<col width="11%" />
+<col width="12%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="4%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">coefs</th>
+<th align="right">stderrs</th>
+<th align="right">t_vals</th>
+<th align="right">p_vals</th>
+<th align="left">stars</th>
+<th align="right">lower_confints</th>
+<th align="right">higher_confints</th>
+<th align="right">rsq</th>
+<th align="right">adj.rsq</th>
+<th align="right">aic</th>
+<th align="right">alpha</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">27.6354030</td>
+<td align="right">17.6217643</td>
+<td align="right">1.5682540</td>
+<td align="right">0.1249008</td>
+<td align="left"></td>
+<td align="right">-8.0079797</td>
+<td align="right">63.2787857</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="even">
+<td align="left">sex</td>
+<td align="right">-33.0132447</td>
+<td align="right">35.0529702</td>
+<td align="right">-0.9418102</td>
+<td align="right">0.3520875</td>
+<td align="left"></td>
+<td align="right">-103.9145693</td>
+<td align="right">37.8880800</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="odd">
+<td align="left">status</td>
+<td align="right">-0.1455658</td>
+<td align="right">0.3315805</td>
+<td align="right">-0.4390059</td>
+<td align="right">0.6630799</td>
+<td align="left"></td>
+<td align="right">-0.8162507</td>
+<td align="right">0.5251191</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">6.0290789</td>
+<td align="right">1.0538467</td>
+<td align="right">5.7210206</td>
+<td align="right">0.0000013</td>
+<td align="left">***</td>
+<td align="right">3.8974727</td>
+<td align="right">8.1606852</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="odd">
+<td align="left">verbal</td>
+<td align="right">-2.9747594</td>
+<td align="right">2.4265408</td>
+<td align="right">-1.2259260</td>
+<td align="right">0.2275778</td>
+<td align="left"></td>
+<td align="right">-7.8829014</td>
+<td align="right">1.9333827</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="even">
+<td align="left">sex:status</td>
+<td align="right">0.3528830</td>
+<td align="right">0.5492327</td>
+<td align="right">0.6425018</td>
+<td align="right">0.5243068</td>
+<td align="left"></td>
+<td align="right">-0.7580451</td>
+<td align="right">1.4638111</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="odd">
+<td align="left">sex:income</td>
+<td align="right">-5.3477745</td>
+<td align="right">2.4243570</td>
+<td align="right">-2.2058528</td>
+<td align="right">0.0333540</td>
+<td align="left">*</td>
+<td align="right">-10.2514993</td>
+<td align="right">-0.4440497</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.05</td>
+</tr>
+<tr class="even">
+<td align="left">sex:verbal</td>
+<td align="right">2.8355168</td>
+<td align="right">4.5973026</td>
+<td align="right">0.6167784</td>
+<td align="right">0.5409650</td>
+<td align="left"></td>
+<td align="right">-6.4634054</td>
+<td align="right">12.1344390</td>
+<td align="right">0.6243438</td>
+<td align="right">0.5569184</td>
+<td align="right">293.3186</td>
+<td align="right">0.05</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">tablecomp</span>(lmod1, lmod2, <span class="at">comparison_value=</span> <span class="st">&#39;coefs&#39;</span>) <span class="co"># only one comparison value to compare lmod1 and lmod2 that vary on the inclusion of some interaction terms.</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; All models are of type specified: lm </span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; Model Output Displays in the Order Specified in the Input of &#39;tablecomp(), when choosing to compare more than one model. </span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; Make sure the largest model is displayed first for nested model comparison, to ensure all predictor names are displayed </span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">coefs</th>
+<th align="right">coefs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">27.6354030</td>
+<td align="right">19.2594292</td>
+</tr>
+<tr class="even">
+<td align="left">sex</td>
+<td align="right">-33.0132447</td>
+<td align="right">4.0636247</td>
+</tr>
+<tr class="odd">
+<td align="left">status</td>
+<td align="right">-0.1455658</td>
+<td align="right">-0.0487626</td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">6.0290789</td>
+<td align="right">6.1988460</td>
+</tr>
+<tr class="odd">
+<td align="left">verbal</td>
+<td align="right">-2.9747594</td>
+<td align="right">-2.6086436</td>
+</tr>
+<tr class="even">
+<td align="left">sex:status</td>
+<td align="right">0.3528830</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">sex:income</td>
+<td align="right">-5.3477745</td>
+<td align="right">-6.4368291</td>
+</tr>
+<tr class="even">
+<td align="left">sex:verbal</td>
+<td align="right">2.8355168</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">tablecomp</span>(lmod1, lmod2, lmod3, <span class="at">comparison_value=</span> <span class="fu">c</span>(<span class="st">&#39;coefs&#39;</span>, <span class="st">&#39;p_vals&#39;</span>, <span class="st">&#39;stars&#39;</span>)) <span class="co"># comparing a few values between 3 models that vary on the inclusion of a few interaction terms.</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co">#&gt; All models are of type specified: lm </span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co">#&gt; Model Output Displays in the Order Specified in the Input of &#39;tablecomp(), when choosing to compare more than one model. </span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co">#&gt; Make sure the largest model is displayed first for nested model comparison, to ensure all predictor names are displayed </span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; </span></span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="12%" />
+<col width="12%" />
+<col width="10%" />
+<col width="6%" />
+<col width="11%" />
+<col width="10%" />
+<col width="6%" />
+<col width="12%" />
+<col width="10%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">coefs</th>
+<th align="right">p_vals</th>
+<th align="left">stars</th>
+<th align="right">coefs</th>
+<th align="right">p_vals</th>
+<th align="left">stars</th>
+<th align="right">coefs</th>
+<th align="right">p_vals</th>
+<th align="left">stars</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">27.6354030</td>
+<td align="right">0.1249008</td>
+<td align="left"></td>
+<td align="right">19.2594292</td>
+<td align="right">0.2297239</td>
+<td align="left"></td>
+<td align="right">22.5556506</td>
+<td align="right">0.1967736</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">sex</td>
+<td align="right">-33.0132447</td>
+<td align="right">0.3520875</td>
+<td align="left"></td>
+<td align="right">4.0636247</td>
+<td align="right">0.7259980</td>
+<td align="left"></td>
+<td align="right">-22.1183301</td>
+<td align="right">0.0101118</td>
+<td align="left">*</td>
+</tr>
+<tr class="odd">
+<td align="left">status</td>
+<td align="right">-0.1455658</td>
+<td align="right">0.6630799</td>
+<td align="left"></td>
+<td align="right">-0.0487626</td>
+<td align="right">0.8520324</td>
+<td align="left"></td>
+<td align="right">0.0522338</td>
+<td align="right">0.8534869</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">income</td>
+<td align="right">6.0290789</td>
+<td align="right">0.0000013</td>
+<td align="left">***</td>
+<td align="right">6.1988460</td>
+<td align="right">0.0000004</td>
+<td align="left">***</td>
+<td align="right">4.9619792</td>
+<td align="right">0.0000179</td>
+<td align="left">***</td>
+</tr>
+<tr class="odd">
+<td align="left">verbal</td>
+<td align="right">-2.9747594</td>
+<td align="right">0.2275778</td>
+<td align="left"></td>
+<td align="right">-2.6086436</td>
+<td align="right">0.1980461</td>
+<td align="left"></td>
+<td align="right">-2.9594935</td>
+<td align="right">0.1803109</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">sex:status</td>
+<td align="right">0.3528830</td>
+<td align="right">0.5243068</td>
+<td align="left"></td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">sex:income</td>
+<td align="right">-5.3477745</td>
+<td align="right">0.0333540</td>
+<td align="left">*</td>
+<td align="right">-6.4368291</td>
+<td align="right">0.0045385</td>
+<td align="left">**</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+<tr class="even">
+<td align="left">sex:verbal</td>
+<td align="right">2.8355168</td>
+<td align="right">0.5409650</td>
+<td align="left"></td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="left">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="conclusion." class="section level2">
+<h2>Conclusion.</h2>
+<p>This package, ‘modcomp’, simplifies a common task for many working
+with linear regression models, especially for graduate students taking
+courses similar to Biostatistical Methods I &amp; II. As model
+comparison after implementing changes is a common check and source of
+interest, this package enables users to condense the relevant comparison
+values into one table, or as a stack of tables. Furthermore, the
+extract_lm package is useful as it offers a way to compute pvalue
+significance in terms of a user-defined alpha, if happens to differ from
+the common standard of 0.05.</p>
+</div>
+<div id="future-version-in-the-works-stay-tuned." class="section level2">
+<h2>Future Version in the works… stay tuned.</h2>
+<p>The framework for this package can easily be expanded to deliver the
+same capabilities for other classes of models. For the purposes of this
+first version, the scope was restricted to linear models only; however,
+it will be a straightforward path to allow for the inclusion of glms,
+coxphs, and more model types. An ‘extract_’ function can be defined for
+each model class, and all can be integrated to work into the ‘tablecomp’
+and ‘tablestack’ frameworks, with an additional restriction that the
+models being compared are of the same class.</p>
+</div>
+<div id="a-note-to-the-user." class="section level2">
+<h2>A Note to the User.</h2>
+<p>Model comparison should be done responsibly; it is most commonly an
+appropriate step when working with nested models, and similar models
+based on the same dataset. Use thought and care when comparing models,
+with added caution to the level of appropriateness for the comparisons
+and what information can be drawn from the comparisons.</p>
+</div>
 
 
 

@@ -7,7 +7,7 @@
 tablecomp(
   ...,
   alpha_ = 0.05,
-  modeltype = c("lm", "coxph"),
+  modeltype = "lm",
   comparison_value = c("coefs", "stderrs", "t_vals", "p_vals", "stars", "lower_confints",
     "higher_confints", "rsq", "adj.rsq", "aic", "alpha")
 )
@@ -17,7 +17,7 @@ tablecomp(
 
 \item{alpha_}{user-defined alpha; define the threshold for significance. Default is 0.05.}
 
-\item{modeltype}{'lm' for linear model, 'coxph' for cox proportional hazards model.}
+\item{modeltype}{'lm' for linear model. Future versions will include other model types (glm, coxph, for example).}
 
 \item{comparison_value}{model components to be compared in the output table. Can specify one, multiple, or all.}
 }

@@ -215,7 +215,7 @@ All models are of type specified: lm
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.087 0.012 0.345 0 0 
+Time elapsed:  0.078 0.01 0.093 0 0 
 > grDevices::dev.off()
 null device 
           1 

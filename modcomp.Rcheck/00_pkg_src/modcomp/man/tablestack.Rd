@@ -4,14 +4,14 @@
 \alias{tablestack}
 \title{Generate a stack of model output tables for quick comparison.}
 \usage{
-tablestack(..., alpha_ = 0.05, modeltype = c("lm", "coxph"))
+tablestack(..., alpha_ = 0.05, modeltype = "lm")
 }
 \arguments{
 \item{...}{model(s) to display components for. can be just one, or as many as desired for a comparison of values}
 
 \item{alpha_}{user-defined alpha; define the threshold for significance. Default is 0.05.}
 
-\item{modeltype}{'lm' for linear model, 'coxph' for cox proportional hazards model.}
+\item{modeltype}{'lm' for linear model. Future versions will include other model types (glm, coxph, for example)}
 }
 \value{
 table(s) of relevant model components for a quick comparison. They are displayed in the order they are entered as input, with the top being the first model specified, and so on.
