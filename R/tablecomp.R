@@ -27,7 +27,7 @@
 #'
 #' @export
 
-tablecomp <- function(..., alpha_ = 0.05, modeltype = c("lm", "coxph"), comparison_value = c("coefs", "stderrs", "t_vals", "p_vals", "stars", "lower_confints", "higher_confints",
+tablecomp <- function(..., alpha_ = 0.05, modeltype = "lm", comparison_value = c("coefs", "stderrs", "t_vals", "p_vals", "stars", "lower_confints", "higher_confints",
     "rsq", "adj.rsq", "aic", "alpha")) {
 
     # Validate that modeltype specified is either 'lm' or 'coxph' using 'match.arg()' function

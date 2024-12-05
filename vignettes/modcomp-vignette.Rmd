@@ -1,5 +1,6 @@
 ---
 title: "modcomp-vignette"
+author: "Lauren Gould"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{modcomp-vignette}
@@ -14,6 +15,69 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+## Linear Model Comparison at a Glance: A package to make regression model comparisons even easier!  
+
+The package 'modcomp' offers users a more flexible way to review linear model summary information, providing an advantage over the 'summary()' function due to the ability for users to define their alpha value of significance (the summary() function only offers output relative to a set 0.05 level of significance, which isn't always the desired level). Even more central to this package, however, are the model comparison functions. This package enables users to view desired model summary components for multiple linear models (perhaps various nested models), in either a stacked fashion via 'tablestack()' (model summary tables output directly on top of each other), or in a side-by-side table via 'tablecomp()', with user-defined model components as the comparison value(s). **This package would be of particular interest to users actively working through a graduate program in biostatistics, as directly comparing linear model characteristics (e.g, beta coefficient estimates, significance of those estimates, AIC values) between an initial model and subsequent nested/similar models after making changes, is a *very* common task**, and scrolling between numerous summary outputs crafted solely from the 'summary()' function is extremely tedious and inefficient.  
+
+## Installing and Loading 'modcomp'. 
+
+'modcomp' can be installed in one of two ways: downloading of the tar.gz file ('modcomp_0.0.0.9000.tar.gz') containing the package, or download through github. Code to run is indented and suppressed with a comment '#'. 
+
+### Option 1: install directly from the tar.gz file
+
+```{r}
+# replace 'path_to_file' with path to the downloaded tar.gz file
+  #install.packages(path_to_file, repos= NULL, type= "source")
+```
+
+### Option 2: install via github
+```{r} 
+# must have package "devtools" installed, and added to library
+  #install.packages("devtools")
+  #library(devtools)
+  
+# install 'modcomp' from github using the following code
+  #install_github("laurenalivia/modcomp")
+  
+```
+
+## Add 'modcomp' to library. 
+```{r}
 library(modcomp)
 ```
+
+## Example Usage 1. 
+### The 'extract_lm()' function. 
+
+The extract_lm() function allows users to extract relevant summary components from a linear model, with an ability to adjust the alpha value of significance. The output can be used to generate a more flexible model summary dataframe if used directly, or this function will also be called as an internal function to both 'tablestack()' and 'tablecomp()'. The 'stars' associated with p value significance are as follows:   
+- p value is less than or equal to 2% of alpha: "\*\*\*".   
+- p value is less than or equal to 20% of alpha: "\*\*".   
+- p value is less than or equal to alpha: "\*\".   
+- p value is less than or equal to 2alpha: ".".   
+- else: " "
+
+```{r}
+# fit linear model
+ data(faraway_teengamb)
+ lmod<-lm(gamble~sex+status+income+verbal+sex:income, data=faraway_teengamb)
+# extract summary components (default alpha value is set to 0.05)
+ extract_lm(lmod)
+# example using a different alpha value, if that is desired
+ extract_lm(lmod, alpha = 0.1)
+```
+
+
+## Example Usage 2. 
+### The 'tablestack()' function. 
+
+The tablestack() function allows the user to stack model information tables on top of each other to allow for a quick and comprehensive comparison between models. This is especially useful in place of the producing multiple summaries via the 'summary()' function, as that method produces too much white space to scroll through and doesn't allow for a direct alignment of the summary outputs to make comparison efficient. That is where this function, tablestack() comes in handy!
+
+```{r}
+
+```
+
+
+
+
+
+
