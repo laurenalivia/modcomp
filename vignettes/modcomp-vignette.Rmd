@@ -30,14 +30,14 @@ The package 'modcomp' offers users a more flexible way to review linear model su
   #install.packages(path_to_file, repos= NULL, type= "source")
 ```
 
-### Option 2: install via github
+### Option 2: install via github (the 'Development/Testing' Branch is the most up to date! NOT MASTER)
 ```{r} 
 # must have package "devtools" installed, and added to library
   #install.packages("devtools")
   #library(devtools)
   
 # install 'modcomp' from github using the following code
-  #install_github("laurenalivia/modcomp")
+  #install_github("laurenalivia/modcomp", ref="Development/Testing")
   
 ```
 
