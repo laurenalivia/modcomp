@@ -17,7 +17,7 @@ Suggests: rmarkdown
 VignetteBuilder: knitr
 LazyData: true
 NeedsCompilation: no
-Packaged: 2024-12-05 01:57:57 UTC; laurenalivia
+Packaged: 2024-12-05 02:57:35 UTC; laurenalivia
 Author: Lauren Gould [aut, cre]
 Maintainer: Lauren Gould <laurengould@ufl.edu>
-Built: R 4.4.2; ; 2024-12-05 01:58:41 UTC; unix
+Built: R 4.4.2; ; 2024-12-05 02:59:09 UTC; unix
