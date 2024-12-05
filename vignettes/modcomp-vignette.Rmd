@@ -47,7 +47,8 @@ library(modcomp)
 ```
 
 ## Example Usage 1. 
-### The 'extract_lm()' function. 
+### The 'extract_lm()' function.  
+#### Extract relevant summary components from a linear model as a dataframe.
 
 The extract_lm() function allows users to extract relevant summary components from a linear model, with an ability to adjust the alpha value of significance. The output can be used to generate a more flexible model summary dataframe if used directly, or this function will also be called as an internal function to both 'tablestack()' and 'tablecomp()'. The 'stars' associated with p value significance are as follows:   
 - p value is less than or equal to 2% of alpha: "\*\*\*".   
@@ -57,26 +58,87 @@ The extract_lm() function allows users to extract relevant summary components fr
 - else: " "
 
 ```{r}
+# view supporting documentation with information regarding what can be supplied as input:
+?extract_lm
+
 # fit linear model
  data(faraway_teengamb)
  lmod<-lm(gamble~sex+status+income+verbal+sex:income, data=faraway_teengamb)
+ 
 # extract summary components (default alpha value is set to 0.05)
  extract_lm(lmod)
+ 
 # example using a different alpha value, if that is desired
  extract_lm(lmod, alpha = 0.1)
 ```
 
 
 ## Example Usage 2. 
-### The 'tablestack()' function. 
+### The 'tablestack()' function.   
+#### Generate a stack of model output tables for quick comparison.  
 
-The tablestack() function allows the user to stack model information tables on top of each other to allow for a quick and comprehensive comparison between models. This is especially useful in place of the producing multiple summaries via the 'summary()' function, as that method produces too much white space to scroll through and doesn't allow for a direct alignment of the summary outputs to make comparison efficient. That is where this function, tablestack() comes in handy!
+The tablestack() function allows the user to stack model information tables on top of each other to allow for a quick and comprehensive comparison between multiple linear models. This is especially useful in place of the producing multiple summaries via the 'summary()' function, as that method produces too much white space to scroll through and doesn't allow for a direct alignment of the summary outputs to make comparison efficient. That is where this function, tablestack() comes in handy! Note: Model summaries are displayed in the order they are entered as input, with the top being the first model specified, and so on.
 
 ```{r}
+# view supporting documentation with information regarding what can be supplied as input:
+  ?tablestack
 
+# fit linear models
+  lmod1<-lm(gamble~sex+status+income+verbal+sex:status+sex:income+sex:verbal,data=faraway_teengamb)
+  lmod2<-lm(gamble~sex+status+income+verbal+sex:income, data = faraway_teengamb)
+
+# use 'tablestack()' to compare outputs displayed this more closely resembles what will output in your console:
+  print(tablestack(lmod1, lmod2, alpha_= 0.1))
+ 
+# or this is just using it straight, which works great but can be forced side-by-side upon knitting in rmarkdown. This can be fixed in a future version.
+  tablestack(lmod1, lmod2, alpha_ = 0.1)
 ```
 
 
+
+## Example Usage 3. 
+### The 'tablecomp()' function.
+#### Generate a table of relevant model components for a quick side-by-side comparison between models.
+
+This function is arguably the *most* useful function in the package, as it offers the ability to generate a *single* table for the direct comparison of the user's desired values between specified linear models. Linear model predictors are displayed on the left of the table, with each model occupying its own column/ set of columns. The values displayed in the table are specified by the user, and can be just one, a few, or all values. However, for the effectiveness of the comparison and keeping to the spirit of proving a 'quick' comparison that maximizes viewing efficiency/clarity, fewer values are recommended.  
+
+One quirk here is that models are displayed left to right in the order they are supplied in the funtion. A later version would fix the lack of model labels, but for now this is the method to identify the models being compared–by order. It is also advised to supply the largest model first (especially if comparing nested models), as it will ensure all predictor names will be displayed successfully. A later version would fix this quirk as well.  
+
+```{r}
+# view supporting documentation with information regarding what can be supplied as input:
+  ?tablecomp
+
+# supply linear model(s) for output comparison
+  lmod1<-lm(gamble~sex+status+income+verbal+sex:status+sex:income+sex:verbal,data=faraway_teengamb)
+  lmod2<-lm(gamble~sex+status+income+verbal+sex:income, data = faraway_teengamb)
+  lmod3<-lm(gamble~sex+status+income+verbal, data = faraway_teengamb)
+   
+# determine what comparison_value(s) are important for the table, or user can do one comparison value
+# per table to make viewing #even easier. Then create desired table(s) using 'comptable()'.
+  
+  tablecomp(lmod1) #all available components for display for one single model. 
+```
+
+```{r}
+tablecomp(lmod1, lmod2, comparison_value= 'coefs') # only one comparison value to compare lmod1 and lmod2 that vary on the inclusion of some interaction terms.
+```
+
+```{r}  
+tablecomp(lmod1, lmod2, lmod3, comparison_value= c('coefs', 'p_vals', 'stars')) # comparing a few values between 3 models that vary on the inclusion of a few interaction terms.
+```
+
+
+## Conclusion. 
+
+This package, 'modcomp', simplifies a common task for many working with linear regression models, especially for graduate students taking courses similar to Biostatistical Methods I & II. As model comparison after implementing changes is a common check and source of interest, this package enables users to condense the relevant comparison values into one table, or as a stack of tables. Furthermore, the extract_lm package is useful as it offers a way to compute pvalue significance in terms of a user-defined alpha, if happens to differ from the common standard of 0.05.   
+
+## Future Version in the works... stay tuned.  
+
+The framework for this package can easily be expanded to deliver the same capabilities for other classes of models. For the purposes of this first version, the scope was restricted to linear models only; however, it will be a straightforward path to allow for the inclusion of glms, coxphs, and more model types. An 'extract_' function can be defined for each model class, and all can be integrated to work into the 'tablecomp' and 'tablestack' frameworks, with an additional restriction that the models being compared are of the same class.  
+
+## A Note to the User. 
+
+Model comparison should be done responsibly; it is most commonly an appropriate step when working with nested models, and similar models based on the same dataset. Use thought and care when comparing models, with added caution to the level of appropriateness for the comparisons and what information can be drawn from the comparisons. 
 
 
 
