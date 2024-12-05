@@ -19,7 +19,7 @@ flush(stderr()); flush(stdout())
 
 #fit linear model
  data(faraway_teengamb)
- lmod<- lm(gamble ~ sex + status + income + verbal + sex:income, data = faraway_teengamb)
+ lmod<-lm(gamble~sex+status+income+verbal+sex:income, data=faraway_teengamb)
 #extract components, supplying 'output=TRUE' to print output
  extract_lm(lmod)
 
@@ -58,11 +58,11 @@ flush(stderr()); flush(stdout())
 
 #supply linear model(s) for output comparison
  data(faraway_teengamb)
- lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = faraway_teengamb)
- lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = faraway_teengamb)
- lmod3<- lm(gamble ~ sex + status + income + verbal, data = faraway_teengamb)
-#determine what comparison_value(s) are important for the table, or user can do one comparison value per table to make viewing
-#even easier. Then create desired table(s) using 'comptable()'.
+ lmod1<-lm(gamble~sex+status+income+verbal+sex:status+sex:income+sex:verbal,data=faraway_teengamb)
+ lmod2<-lm(gamble~sex+status+income+verbal+sex:income, data = faraway_teengamb)
+ lmod3<-lm(gamble~sex+status+income+verbal, data = faraway_teengamb)
+#determine what comparison_value(s) are important for the table, or user can do one comparison value
+#per table to make viewing #even easier. Then create desired table(s) using 'comptable()'.
 tablecomp(lmod1)
 tablecomp(lmod1, lmod2, comparison_value= 'coefs')
 tablecomp(lmod1, lmod2, lmod3, comparison_value= c('coefs', 'p_vals', 'stars'))
@@ -84,8 +84,8 @@ flush(stderr()); flush(stdout())
 
 #fit linear models
 data(faraway_teengamb)
-lmod1<- lm(gamble ~ sex + status + income + verbal + sex:status + sex:income + sex:verbal, data = faraway_teengamb)
-lmod2<- lm(gamble ~ sex + status + income + verbal + sex:income, data = faraway_teengamb)
+lmod1<-lm(gamble~sex+status+income+verbal+sex:status+sex:income+sex:verbal,data=faraway_teengamb)
+lmod2<-lm(gamble~sex+status+income+verbal+sex:income, data = faraway_teengamb)
 #use 'tablestack()' to compare outputs displayed; can choose a user-defined alpha
 #if default 0.05 is not the desired level.
  tablestack(lmod1, lmod2, alpha_= 0.1)
