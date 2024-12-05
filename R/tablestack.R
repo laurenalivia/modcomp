@@ -6,7 +6,7 @@
 #'
 #' @title Generate a stack of model output tables for quick comparison.
 #' @param ... model(s) to display components for. can be just one, or as many as desired for a comparison of values
-#' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
+#' @param modeltype 'lm' for linear model. Future versions will include other model types (glm, coxph, for example)
 #' @param alpha_ user-defined alpha; define the threshold for significance. Default is 0.05.
 #' @return table(s) of relevant model components for a quick comparison. They are displayed in the order they are entered as input, with the top being the first model specified, and so on.
 #' @examples

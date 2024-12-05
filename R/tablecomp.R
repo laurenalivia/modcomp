@@ -9,7 +9,7 @@
 #'
 #' @title Generate Model Comparison Table
 #' @param ... model(s) to display components for. can be just one, or as many as desired for side-by-side comparison of values
-#' @param modeltype 'lm' for linear model, 'coxph' for cox proportional hazards model.
+#' @param modeltype 'lm' for linear model. Future versions will include other model types (glm, coxph, for example).
 #' @param alpha_ user-defined alpha; define the threshold for significance. Default is 0.05.
 #' @param comparison_value model components to be compared in the output table. Can specify one, multiple, or all.
 #' @return table of relevant model components for a quick side-by-side comparison between models

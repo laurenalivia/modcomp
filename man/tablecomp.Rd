@@ -17,7 +17,7 @@ tablecomp(
 
 \item{alpha_}{user-defined alpha; define the threshold for significance. Default is 0.05.}
 
-\item{modeltype}{'lm' for linear model, 'coxph' for cox proportional hazards model.}
+\item{modeltype}{'lm' for linear model. Future versions will include other model types (glm, coxph, for example).}
 
 \item{comparison_value}{model components to be compared in the output table. Can specify one, multiple, or all.}
 }
