@@ -19,4 +19,4 @@
 #' data(faraway_teengamb)
 #' head(faraway_teengamb)
 #' str(faraway_teengamb)
-"faraway_teengamb"
+NULL
