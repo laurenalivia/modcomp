@@ -7,7 +7,7 @@
 tablecomp(
   ...,
   alpha_ = 0.05,
-  modeltype = c("lm", "coxph"),
+  modeltype = "lm",
   comparison_value = c("coefs", "stderrs", "t_vals", "p_vals", "stars", "lower_confints",
     "higher_confints", "rsq", "adj.rsq", "aic", "alpha")
 )

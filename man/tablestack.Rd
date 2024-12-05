@@ -4,7 +4,7 @@
 \alias{tablestack}
 \title{Generate a stack of model output tables for quick comparison.}
 \usage{
-tablestack(..., alpha_ = 0.05, modeltype = c("lm", "coxph"))
+tablestack(..., alpha_ = 0.05, modeltype = "lm")
 }
 \arguments{
 \item{...}{model(s) to display components for. can be just one, or as many as desired for a comparison of values}
