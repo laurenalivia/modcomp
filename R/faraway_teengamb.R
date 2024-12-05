@@ -14,7 +14,6 @@
 #'  \item{gamble}{expenditure on gambling in pounds per year}
 #' }
 #' @source Package 'faraway' version 1.0.8, Source listed: Ide-Smith & Lea, 1988, Journal of Gambling Behavior, 4, 110-118
-#' @export
 #' @examples
 #' data(faraway_teengamb)
 #' head(faraway_teengamb)
