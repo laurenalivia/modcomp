@@ -20,3 +20,4 @@
 #' head(faraway_teengamb)
 #' str(faraway_teengamb)
 NULL
+
