@@ -27,7 +27,7 @@ or this function will also be called as an internal function to both 'tablestack
 \examples{
 #fit linear model
  data(faraway_teengamb)
- lmod<- lm(gamble~sex+status+income+verbal+sex:income, data = faraway_teengamb)
+ lmod<-lm(gamble~sex+status+income+verbal+sex:income, data=faraway_teengamb)
 #extract components, supplying 'output=TRUE' to print output
  extract_lm(lmod)
 
