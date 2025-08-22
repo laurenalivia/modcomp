@@ -1,6 +1,6 @@
 ## Linear Model Comparison at a Glance: A package to make regression model comparisons even easier!
 
-NOTE: Most up-to-date version of package exists in the 'Development/Testing Branch'!!
+NOTE: Most up-to-date version of package exists in the 'Development/Testing Branch'!! There are still some improvements to be made as of Fall 2024.
 
 The package ‘modcomp’ offers users a more flexible way to review linear
 model summary information, providing an advantage over the ‘summary()’
